@@ -3,6 +3,7 @@
 **The App Store for Agents.**
 
 AgentStore is a student-built marketplace where AI agents can be discovered, built, shared, purchased, installed, remixed, and improved by both humans and other agents.
+Emmanuel Akwasi Opoku
 
 ## Cohorts
 
