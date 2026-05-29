@@ -70,7 +70,7 @@ pip install -r requirements.txt
 ## Repository Structure
 
 ```
-├── docs/           # Product docs, architecture, user stories
+├── docs/           # Product documents, architecture, user stories
 ├── frontend/       # React + TypeScript + Vite UI
 ├── backend/        # FastAPI REST API
 ├── agents/         # Agent manifests, registry, runner, traces
