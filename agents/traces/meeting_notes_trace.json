@@ -1,0 +1,62 @@
+{
+  "agent_id": "meeting_notes",
+  "run_id": "run_meeting_001",
+  "status": "completed",
+  "started_at": "2026-05-29T14:30:00Z",
+  "completed_at": "2026-05-29T14:30:05Z",
+  "user_request": "Summarize today's standup meeting notes",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Receive user request",
+      "details": "Parsed request: summarize standup notes for today"
+    },
+    {
+      "step": 2,
+      "action": "Identify required tools",
+      "details": "Agent manifest requires: notes, calendar_reader"
+    },
+    {
+      "step": 3,
+      "action": "Call mock tool",
+      "tool": "calendar_reader",
+      "input": { "start_date": "2026-05-29", "end_date": "2026-05-29" },
+      "output_summary": "Found standup event: Daily Standup 9:00 AM"
+    },
+    {
+      "step": 4,
+      "action": "Call mock tool",
+      "tool": "notes",
+      "input": { "action": "read", "note_id": "standup_20260529" },
+      "output_summary": "Retrieved raw standup notes (450 words)"
+    },
+    {
+      "step": 5,
+      "action": "Process tool response",
+      "details": "Extracted decisions, blockers, and action items from notes"
+    },
+    {
+      "step": 6,
+      "action": "Generate final answer",
+      "details": "Produced structured summary with 4 action items"
+    },
+    {
+      "step": 7,
+      "action": "Save run history",
+      "details": "Run logged to trace store with run_id run_meeting_001"
+    }
+  ],
+  "final_output": {
+    "summary": "Team discussed MVP progress. Frontend agent cards are in progress. Backend endpoints need review. Blocker: mock data format alignment.",
+    "decisions": [
+      "Use JSON file storage for MVP ratings",
+      "Demo date set for end of sprint"
+    ],
+    "action_items": [
+      { "task": "Complete agent card component", "owner": "Frontend team", "due_date": "2026-06-02" },
+      { "task": "Implement GET /agents endpoint", "owner": "Backend team", "due_date": "2026-06-01" },
+      { "task": "Align mock dataset schemas", "owner": "Data Science team", "due_date": "2026-05-30" },
+      { "task": "Add trace viewer UI", "owner": "Frontend team", "due_date": "2026-06-03" }
+    ]
+  }
+}

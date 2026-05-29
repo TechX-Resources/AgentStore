@@ -1,0 +1,37 @@
+{
+  "id": "resume_reviewer",
+  "name": "Resume Reviewer Agent",
+  "description": "Reviews resume documents and provides actionable feedback for improvement.",
+  "category": "Career",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.6,
+  "downloads": 2100,
+  "installs": 1500,
+  "runs": 8900,
+  "tags": ["career", "resume", "job-search"],
+  "tools_required": ["file_reader"],
+  "permissions_required": ["files.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "file_path": { "type": "string" },
+      "target_role": { "type": "string" }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "overall_score": { "type": "number" },
+      "strengths": { "type": "array", "items": { "type": "string" } },
+      "improvements": { "type": "array", "items": { "type": "string" } },
+      "section_feedback": { "type": "object" }
+    }
+  },
+  "example_use_case": "Upload a resume and get tailored feedback for a software engineering role.",
+  "example_prompts": [
+    "Review my resume for a data scientist position",
+    "What sections of my resume need improvement?"
+  ]
+}

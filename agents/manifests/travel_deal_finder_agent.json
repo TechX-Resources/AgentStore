@@ -1,0 +1,37 @@
+{
+  "id": "travel_deal_finder",
+  "name": "Travel Deal Finder Agent",
+  "description": "Searches for travel deals and compares options for flights and accommodations.",
+  "category": "Travel",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.2,
+  "downloads": 950,
+  "installs": 580,
+  "runs": 2200,
+  "tags": ["travel", "deals", "search"],
+  "tools_required": ["web_search", "browser"],
+  "permissions_required": ["network.search", "browser.navigate"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "destination": { "type": "string" },
+      "dates": { "type": "string" },
+      "budget": { "type": "number" }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "deals": { "type": "array" },
+      "best_value": { "type": "object" },
+      "comparison_summary": { "type": "string" }
+    }
+  },
+  "example_use_case": "Find budget-friendly flight and hotel options for a weekend trip to Chicago.",
+  "example_prompts": [
+    "Find travel deals to Tokyo under $800",
+    "Compare flight options for March 15-20"
+  ]
+}

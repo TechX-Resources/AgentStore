@@ -1,0 +1,23 @@
+[
+  {
+    "id": "msg_001",
+    "subject": "Project deadline reminder",
+    "from": "alice@company.com",
+    "snippet": "Hi, just a reminder that the Q2 deliverable is due Friday...",
+    "date": "2026-05-29T08:30:00Z"
+  },
+  {
+    "id": "msg_002",
+    "subject": "Meeting reschedule",
+    "from": "bob@company.com",
+    "snippet": "Can we move our 2pm sync to 3pm tomorrow?",
+    "date": "2026-05-29T07:15:00Z"
+  },
+  {
+    "id": "msg_003",
+    "subject": "Invoice #4521 pending approval",
+    "from": "finance@company.com",
+    "snippet": "Please review and approve invoice #4521 by EOD.",
+    "date": "2026-05-28T16:00:00Z"
+  }
+]

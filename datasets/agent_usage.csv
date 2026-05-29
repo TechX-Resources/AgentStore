@@ -1,0 +1,11 @@
+agent_id,agent_name,total_downloads,total_installs,total_runs,recent_runs,error_rate,last_run_date
+email_summarizer,Email Summarizer Agent,1250,890,5420,320,0.02,2026-05-29
+github_issue_triage,GitHub Issue Triage Agent,980,720,3100,180,0.05,2026-05-28
+calendar_planner,Calendar Planner Agent,1100,650,2800,95,0.03,2026-05-27
+resume_reviewer,Resume Reviewer Agent,2100,1500,8900,450,0.01,2026-05-29
+study_buddy,Study Buddy Agent,1800,1200,6500,280,0.02,2026-05-28
+travel_deal_finder,Travel Deal Finder Agent,950,580,2200,75,0.08,2026-05-26
+data_cleaner,Data Cleaner Agent,1400,900,4100,150,0.04,2026-05-27
+meeting_notes,Meeting Notes Agent,2300,1700,9800,520,0.01,2026-05-29
+content_generator,Content Generator Agent,1600,1100,7200,310,0.03,2026-05-28
+budget_analyzer,Budget Analyzer Agent,1300,850,3800,120,0.02,2026-05-27

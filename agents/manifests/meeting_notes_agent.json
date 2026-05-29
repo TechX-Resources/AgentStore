@@ -1,0 +1,47 @@
+{
+  "id": "meeting_notes",
+  "name": "Meeting Notes Agent",
+  "description": "Generates structured meeting notes with action items, decisions, and follow-ups.",
+  "category": "Communication",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.8,
+  "downloads": 2300,
+  "installs": 1700,
+  "runs": 9800,
+  "tags": ["meetings", "notes", "communication", "productivity"],
+  "tools_required": ["notes", "calendar_reader"],
+  "permissions_required": ["notes.read", "notes.write", "calendar.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "meeting_title": { "type": "string" },
+      "raw_notes": { "type": "string" },
+      "calendar_event_id": { "type": "string" }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": { "type": "string" },
+      "decisions": { "type": "array", "items": { "type": "string" } },
+      "action_items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "task": { "type": "string" },
+            "owner": { "type": "string" },
+            "due_date": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "example_use_case": "Turn rough meeting notes into a structured summary with assigned action items.",
+  "example_prompts": [
+    "Summarize today's standup meeting notes",
+    "Extract action items from my team sync"
+  ]
+}

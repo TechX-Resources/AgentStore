@@ -1,0 +1,36 @@
+{
+  "id": "data_cleaner",
+  "name": "Data Cleaner Agent",
+  "description": "Identifies and fixes common data quality issues in spreadsheets and CSV files.",
+  "category": "Data Analysis",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.5,
+  "downloads": 1400,
+  "installs": 900,
+  "runs": 4100,
+  "tags": ["data", "cleaning", "spreadsheet", "analysis"],
+  "tools_required": ["spreadsheet", "file_reader"],
+  "permissions_required": ["spreadsheet.read", "spreadsheet.write", "files.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "sheet_id": { "type": "string" },
+      "cleaning_rules": { "type": "array", "items": { "type": "string" } }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "issues_found": { "type": "array" },
+      "fixes_applied": { "type": "array" },
+      "cleaned_summary": { "type": "object" }
+    }
+  },
+  "example_use_case": "Clean a messy sales CSV by removing duplicates and fixing date formats.",
+  "example_prompts": [
+    "Clean my sales data spreadsheet",
+    "Find missing values and outliers in this dataset"
+  ]
+}

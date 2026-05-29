@@ -1,0 +1,15 @@
+date,category,amount,description
+2026-05-01,Food,450.00,Groceries and dining
+2026-05-01,Transport,120.00,Gas and transit
+2026-05-01,Entertainment,85.00,Streaming and events
+2026-05-01,Utilities,210.00,Electric and internet
+2026-05-01,Housing,1500.00,Rent
+2026-05-08,Food,380.00,Groceries
+2026-05-08,Transport,95.00,Gas
+2026-05-08,Entertainment,150.00,Concert tickets
+2026-05-15,Food,520.00,Groceries and dining out
+2026-05-15,Transport,110.00,Gas and parking
+2026-05-15,Shopping,200.00,Clothing
+2026-05-22,Food,410.00,Groceries
+2026-05-22,Utilities,45.00,Water bill
+2026-05-22,Entertainment,60.00,Games

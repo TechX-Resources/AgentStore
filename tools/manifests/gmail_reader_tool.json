@@ -1,0 +1,36 @@
+{
+  "id": "gmail_reader",
+  "name": "Gmail Reader",
+  "description": "Reads and summarizes email messages from a user's inbox. Mock implementation only.",
+  "category": "Email",
+  "version": "1.0.0",
+  "permission_level": "read",
+  "permissions_required": ["email.read"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "Search query or label filter" },
+      "max_results": { "type": "integer", "default": 10 }
+    },
+    "required": ["query"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "messages": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "subject": { "type": "string" },
+            "from": { "type": "string" },
+            "snippet": { "type": "string" },
+            "date": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "mock_implementation_notes": "Return sample email objects from datasets/mock_emails.json. Do not connect to Gmail API."
+}

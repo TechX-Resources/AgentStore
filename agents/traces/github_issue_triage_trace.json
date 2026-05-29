@@ -1,0 +1,58 @@
+{
+  "agent_id": "github_issue_triage",
+  "run_id": "run_github_001",
+  "status": "completed",
+  "started_at": "2026-05-29T10:15:00Z",
+  "completed_at": "2026-05-29T10:15:04Z",
+  "user_request": "Triage all open issues in techx/agentstore",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Receive user request",
+      "details": "Parsed request: triage open issues for repo techx/agentstore"
+    },
+    {
+      "step": 2,
+      "action": "Identify required tools",
+      "details": "Agent manifest requires: github_reader"
+    },
+    {
+      "step": 3,
+      "action": "Call mock tool",
+      "tool": "github_reader",
+      "input": { "repo": "techx/agentstore", "state": "open" },
+      "output_summary": "Retrieved 8 open issues"
+    },
+    {
+      "step": 4,
+      "action": "Process tool response",
+      "details": "Analyzed issue titles, bodies, and existing labels"
+    },
+    {
+      "step": 5,
+      "action": "Generate final answer",
+      "details": "Assigned suggested labels, priority, and assignees for 8 issues"
+    },
+    {
+      "step": 6,
+      "action": "Save run history",
+      "details": "Run logged to trace store with run_id run_github_001"
+    }
+  ],
+  "final_output": {
+    "triaged_issues": [
+      {
+        "issue_number": 12,
+        "suggested_labels": ["bug", "frontend"],
+        "priority": "high",
+        "suggested_assignee": "frontend-team"
+      },
+      {
+        "issue_number": 15,
+        "suggested_labels": ["enhancement", "backend"],
+        "priority": "medium",
+        "suggested_assignee": "backend-team"
+      }
+    ]
+  }
+}

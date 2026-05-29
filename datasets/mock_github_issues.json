@@ -1,0 +1,23 @@
+[
+  {
+    "number": 12,
+    "title": "Agent cards not loading on mobile",
+    "body": "When viewing the agents page on mobile, cards overflow the container.",
+    "labels": ["bug"],
+    "state": "open"
+  },
+  {
+    "number": 15,
+    "title": "Add trending sort to agent browse page",
+    "body": "Users should be able to sort agents by trending score.",
+    "labels": ["enhancement"],
+    "state": "open"
+  },
+  {
+    "number": 18,
+    "title": "Tool-call trace viewer component",
+    "body": "Need a UI component to display step-by-step agent execution traces.",
+    "labels": ["feature", "frontend"],
+    "state": "open"
+  }
+]

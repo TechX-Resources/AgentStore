@@ -1,0 +1,45 @@
+{
+  "id": "github_issue_triage",
+  "name": "GitHub Issue Triage Agent",
+  "description": "Analyzes open GitHub issues, suggests labels, priority, and assignees.",
+  "category": "Developer Tools",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.7,
+  "downloads": 980,
+  "installs": 720,
+  "runs": 3100,
+  "tags": ["github", "developer", "triage", "issues"],
+  "tools_required": ["github_reader"],
+  "permissions_required": ["github.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "repo": { "type": "string", "description": "owner/repo" },
+      "state": { "type": "string", "enum": ["open", "closed", "all"] }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "triaged_issues": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "issue_number": { "type": "integer" },
+            "suggested_labels": { "type": "array" },
+            "priority": { "type": "string" },
+            "suggested_assignee": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "example_use_case": "Automatically triage new issues in an open-source repo every morning.",
+  "example_prompts": [
+    "Triage all open issues in myorg/myrepo",
+    "Which issues need urgent attention?"
+  ]
+}

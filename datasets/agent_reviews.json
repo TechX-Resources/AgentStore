@@ -1,0 +1,50 @@
+[
+  {
+    "agent_id": "email_summarizer",
+    "rating": 5,
+    "review": "Saves me 30 minutes every morning. The action items feature is incredibly useful.",
+    "date": "2026-05-20"
+  },
+  {
+    "agent_id": "email_summarizer",
+    "rating": 4,
+    "review": "Good summaries but sometimes misses important emails in long threads.",
+    "date": "2026-05-22"
+  },
+  {
+    "agent_id": "github_issue_triage",
+    "rating": 5,
+    "review": "Perfect for our open source project. Label suggestions are spot on.",
+    "date": "2026-05-18"
+  },
+  {
+    "agent_id": "meeting_notes",
+    "rating": 5,
+    "review": "Best meeting notes agent I've tried. Action items with owners are a game changer.",
+    "date": "2026-05-25"
+  },
+  {
+    "agent_id": "meeting_notes",
+    "rating": 4,
+    "review": "Works well for standups. Would love better integration with calendar events.",
+    "date": "2026-05-27"
+  },
+  {
+    "agent_id": "resume_reviewer",
+    "rating": 5,
+    "review": "Got actionable feedback that helped me land interviews. Highly recommend.",
+    "date": "2026-05-15"
+  },
+  {
+    "agent_id": "travel_deal_finder",
+    "rating": 3,
+    "review": "Found some deals but prices weren't always accurate. Needs improvement.",
+    "date": "2026-05-19"
+  },
+  {
+    "agent_id": "study_buddy",
+    "rating": 4,
+    "review": "Flashcards are great for exam prep. Study plans could be more customizable.",
+    "date": "2026-05-21"
+  }
+]

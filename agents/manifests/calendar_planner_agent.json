@@ -1,0 +1,36 @@
+{
+  "id": "calendar_planner",
+  "name": "Calendar Planner Agent",
+  "description": "Plans your day by analyzing calendar events and suggesting time blocks for focused work.",
+  "category": "Productivity",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.3,
+  "downloads": 1100,
+  "installs": 650,
+  "runs": 2800,
+  "tags": ["calendar", "planning", "productivity"],
+  "tools_required": ["calendar_reader"],
+  "permissions_required": ["calendar.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "date": { "type": "string", "format": "date" },
+      "focus_hours_needed": { "type": "number" }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "schedule_summary": { "type": "string" },
+      "focus_blocks": { "type": "array" },
+      "conflicts": { "type": "array" }
+    }
+  },
+  "example_use_case": "Plan tomorrow's schedule and find 2 hours of uninterrupted focus time.",
+  "example_prompts": [
+    "Plan my schedule for tomorrow",
+    "Find focus time blocks in my calendar this week"
+  ]
+}

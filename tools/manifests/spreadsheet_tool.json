@@ -1,0 +1,28 @@
+{
+  "id": "spreadsheet",
+  "name": "Spreadsheet Tool",
+  "description": "Reads and writes spreadsheet data for analysis. Mock implementation only.",
+  "category": "Spreadsheet",
+  "version": "1.0.0",
+  "permission_level": "write",
+  "permissions_required": ["spreadsheet.read", "spreadsheet.write"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "action": { "type": "string", "enum": ["read", "write", "analyze"] },
+      "sheet_id": { "type": "string" },
+      "range": { "type": "string" },
+      "data": { "type": "array" }
+    },
+    "required": ["action"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "rows": { "type": "array" },
+      "columns": { "type": "array", "items": { "type": "string" } },
+      "summary": { "type": "object" }
+    }
+  },
+  "mock_implementation_notes": "Use datasets/mock_spreadsheet.csv for read/analyze. Return computed summary stats."
+}

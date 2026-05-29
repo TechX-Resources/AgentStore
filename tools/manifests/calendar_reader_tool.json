@@ -1,0 +1,36 @@
+{
+  "id": "calendar_reader",
+  "name": "Calendar Reader",
+  "description": "Reads calendar events and availability. Mock implementation only.",
+  "category": "Calendar",
+  "version": "1.0.0",
+  "permission_level": "read",
+  "permissions_required": ["calendar.read"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "start_date": { "type": "string", "format": "date" },
+      "end_date": { "type": "string", "format": "date" }
+    },
+    "required": ["start_date", "end_date"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "events": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "title": { "type": "string" },
+            "start": { "type": "string" },
+            "end": { "type": "string" },
+            "location": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "mock_implementation_notes": "Return sample events from datasets/mock_calendar_events.json."
+}

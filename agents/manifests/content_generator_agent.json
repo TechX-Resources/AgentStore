@@ -1,0 +1,38 @@
+{
+  "id": "content_generator",
+  "name": "Content Generator Agent",
+  "description": "Generates blog posts, social media content, and marketing copy from briefs and source material.",
+  "category": "Content Creation",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.3,
+  "downloads": 1600,
+  "installs": 1100,
+  "runs": 7200,
+  "tags": ["content", "writing", "marketing", "social-media"],
+  "tools_required": ["file_reader", "web_search"],
+  "permissions_required": ["files.read", "network.search"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "content_type": { "type": "string", "enum": ["blog", "social", "email", "ad_copy"] },
+      "topic": { "type": "string" },
+      "source_files": { "type": "array", "items": { "type": "string" } },
+      "tone": { "type": "string", "enum": ["professional", "casual", "technical"] }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "content": { "type": "string" },
+      "variants": { "type": "array", "items": { "type": "string" } },
+      "suggested_tags": { "type": "array", "items": { "type": "string" } }
+    }
+  },
+  "example_use_case": "Generate a LinkedIn post about a product launch using the press release as source material.",
+  "example_prompts": [
+    "Write a blog post about AI agents in education",
+    "Create 3 social media variants for our new feature"
+  ]
+}

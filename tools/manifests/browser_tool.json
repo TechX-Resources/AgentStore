@@ -1,0 +1,27 @@
+{
+  "id": "browser",
+  "name": "Browser Automation",
+  "description": "Simulates browser navigation and page scraping. Mock implementation only.",
+  "category": "Browser",
+  "version": "1.0.0",
+  "permission_level": "read",
+  "permissions_required": ["browser.navigate"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "url": { "type": "string", "format": "uri" },
+      "action": { "type": "string", "enum": ["navigate", "extract_text", "screenshot"] }
+    },
+    "required": ["url", "action"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "url": { "type": "string" },
+      "title": { "type": "string" },
+      "text_content": { "type": "string" },
+      "extracted_data": { "type": "object" }
+    }
+  },
+  "mock_implementation_notes": "Return canned page content from datasets/mock_web_pages.json. Do not launch real browser in MVP."
+}

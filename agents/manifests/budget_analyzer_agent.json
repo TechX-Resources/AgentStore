@@ -1,0 +1,38 @@
+{
+  "id": "budget_analyzer",
+  "name": "Budget Analyzer Agent",
+  "description": "Analyzes personal or project budgets, identifies spending patterns, and suggests savings.",
+  "category": "Finance",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.4,
+  "downloads": 1300,
+  "installs": 850,
+  "runs": 3800,
+  "tags": ["finance", "budget", "analysis", "savings"],
+  "tools_required": ["spreadsheet"],
+  "permissions_required": ["spreadsheet.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "sheet_id": { "type": "string" },
+      "period": { "type": "string", "enum": ["monthly", "quarterly", "yearly"] },
+      "categories": { "type": "array", "items": { "type": "string" } }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "total_spending": { "type": "number" },
+      "category_breakdown": { "type": "object" },
+      "savings_opportunities": { "type": "array", "items": { "type": "string" } },
+      "trend_summary": { "type": "string" }
+    }
+  },
+  "example_use_case": "Analyze monthly expenses and find categories where you can cut 10% of spending.",
+  "example_prompts": [
+    "Analyze my monthly budget spreadsheet",
+    "Where am I overspending compared to last quarter?"
+  ]
+}

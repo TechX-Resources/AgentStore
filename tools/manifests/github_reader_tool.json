@@ -1,0 +1,37 @@
+{
+  "id": "github_reader",
+  "name": "GitHub Reader",
+  "description": "Reads GitHub issues, pull requests, and repository metadata. Mock implementation only.",
+  "category": "GitHub",
+  "version": "1.0.0",
+  "permission_level": "read",
+  "permissions_required": ["github.read"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "repo": { "type": "string", "description": "owner/repo format" },
+      "issue_number": { "type": "integer" },
+      "state": { "type": "string", "enum": ["open", "closed", "all"] }
+    },
+    "required": ["repo"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "issues": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "number": { "type": "integer" },
+            "title": { "type": "string" },
+            "body": { "type": "string" },
+            "labels": { "type": "array", "items": { "type": "string" } },
+            "state": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+  "mock_implementation_notes": "Return sample issues from datasets/mock_github_issues.json."
+}

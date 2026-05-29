@@ -1,0 +1,32 @@
+{
+  "id": "file_reader",
+  "name": "File Reader",
+  "description": "Reads text and document files from local or uploaded storage. Mock implementation only.",
+  "category": "Files",
+  "version": "1.0.0",
+  "permission_level": "read",
+  "permissions_required": ["files.read"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "file_path": { "type": "string" },
+      "format": { "type": "string", "enum": ["text", "pdf", "docx"] }
+    },
+    "required": ["file_path"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "content": { "type": "string" },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "filename": { "type": "string" },
+          "size_bytes": { "type": "integer" },
+          "format": { "type": "string" }
+        }
+      }
+    }
+  },
+  "mock_implementation_notes": "Return sample file content from datasets/mock_files/. Do not read real filesystem paths in MVP."
+}

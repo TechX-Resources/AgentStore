@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+.env
+
+# Build outputs
+dist/
+build/
+frontend/dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local data (students may generate runtime JSON)
+backend/app/storage/runtime/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env.local
+.env.*.local
+
+# Local setup spec (not for repo)
+spec.md

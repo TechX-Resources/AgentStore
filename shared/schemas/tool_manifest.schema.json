@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ToolManifest",
+  "description": "Schema for AgentStore marketplace tools",
+  "type": "object",
+  "required": ["id", "name", "description", "category"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Email", "Calendar", "GitHub", "Files", "Search",
+        "Browser", "Notes", "Spreadsheet", "Messaging", "Database"
+      ]
+    },
+    "version": { "type": "string" },
+    "permission_level": { "type": "string", "enum": ["read", "write", "admin"] },
+    "permissions_required": { "type": "array", "items": { "type": "string" } },
+    "input_schema": { "type": "object" },
+    "output_schema": { "type": "object" },
+    "mock_implementation_notes": { "type": "string" }
+  }
+}

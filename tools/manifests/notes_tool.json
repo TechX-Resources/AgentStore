@@ -1,0 +1,29 @@
+{
+  "id": "notes",
+  "name": "Notes Tool",
+  "description": "Creates, reads, and organizes notes. Mock implementation only.",
+  "category": "Notes",
+  "version": "1.0.0",
+  "permission_level": "write",
+  "permissions_required": ["notes.read", "notes.write"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "action": { "type": "string", "enum": ["create", "read", "list"] },
+      "note_id": { "type": "string" },
+      "content": { "type": "string" },
+      "title": { "type": "string" }
+    },
+    "required": ["action"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "note_id": { "type": "string" },
+      "title": { "type": "string" },
+      "content": { "type": "string" },
+      "created_at": { "type": "string" }
+    }
+  },
+  "mock_implementation_notes": "Store notes in backend JSON storage. Return mock notes for read/list actions."
+}

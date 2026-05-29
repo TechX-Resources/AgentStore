@@ -1,0 +1,36 @@
+{
+  "id": "email_summarizer",
+  "name": "Email Summarizer Agent",
+  "description": "Summarizes unread emails and highlights action items from your inbox.",
+  "category": "Productivity",
+  "creator": "AgentStore Team",
+  "version": "1.0.0",
+  "status": "published",
+  "rating": 4.5,
+  "downloads": 1250,
+  "installs": 890,
+  "runs": 5420,
+  "tags": ["email", "productivity", "summarization"],
+  "tools_required": ["gmail_reader"],
+  "permissions_required": ["email.read"],
+  "inputs": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "Email filter, e.g. 'is:unread'" },
+      "summary_style": { "type": "string", "enum": ["brief", "detailed", "action_items"] }
+    }
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "summary": { "type": "string" },
+      "action_items": { "type": "array", "items": { "type": "string" } },
+      "email_count": { "type": "integer" }
+    }
+  },
+  "example_use_case": "Get a morning briefing of unread emails with prioritized action items before starting work.",
+  "example_prompts": [
+    "Summarize my unread emails from today",
+    "What action items do I have in my inbox?"
+  ]
+}

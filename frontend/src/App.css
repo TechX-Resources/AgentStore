@@ -1,0 +1,78 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: #1a1a2e;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header .logo {
+  color: white;
+  text-decoration: none;
+}
+
+.app-header .logo h1 {
+  font-size: 1.5rem;
+}
+
+.app-header .tagline {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.app-header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.app-header nav a {
+  color: #a5b4fc;
+  font-weight: 500;
+}
+
+.app-header nav a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.page-title {
+  margin-bottom: 1.5rem;
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.placeholder-notice {
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,51 @@
+{
+  "agent_id": "email_summarizer",
+  "run_id": "run_email_001",
+  "status": "completed",
+  "started_at": "2026-05-29T09:00:00Z",
+  "completed_at": "2026-05-29T09:00:03Z",
+  "user_request": "Summarize my unread emails from today",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Receive user request",
+      "details": "Parsed request: summarize unread emails, style=brief"
+    },
+    {
+      "step": 2,
+      "action": "Identify required tools",
+      "details": "Agent manifest requires: gmail_reader"
+    },
+    {
+      "step": 3,
+      "action": "Call mock tool",
+      "tool": "gmail_reader",
+      "input": { "query": "is:unread after:2026/05/29", "max_results": 10 },
+      "output_summary": "Retrieved 5 unread emails"
+    },
+    {
+      "step": 4,
+      "action": "Process tool response",
+      "details": "Extracted subjects, senders, and key snippets from 5 messages"
+    },
+    {
+      "step": 5,
+      "action": "Generate final answer",
+      "details": "Produced brief summary with 3 action items"
+    },
+    {
+      "step": 6,
+      "action": "Save run history",
+      "details": "Run logged to trace store with run_id run_email_001"
+    }
+  ],
+  "final_output": {
+    "summary": "You have 5 unread emails. Key topics: project deadline (Alice), meeting reschedule (Bob), invoice approval (Finance).",
+    "action_items": [
+      "Reply to Alice about project deadline by EOD",
+      "Confirm rescheduled meeting with Bob",
+      "Approve invoice #4521 in Finance portal"
+    ],
+    "email_count": 5
+  }
+}

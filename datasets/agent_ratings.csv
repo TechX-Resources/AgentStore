@@ -1,0 +1,11 @@
+agent_id,agent_name,avg_rating,rating_count,five_star,four_star,three_star,two_star,one_star
+email_summarizer,Email Summarizer Agent,4.5,234,120,80,25,6,3
+github_issue_triage,GitHub Issue Triage Agent,4.7,189,110,55,18,4,2
+calendar_planner,Calendar Planner Agent,4.3,156,70,55,22,6,3
+resume_reviewer,Resume Reviewer Agent,4.6,412,220,130,45,12,5
+study_buddy,Study Buddy Agent,4.4,298,150,100,35,8,5
+travel_deal_finder,Travel Deal Finder Agent,4.2,145,60,50,25,7,3
+data_cleaner,Data Cleaner Agent,4.5,178,90,60,20,5,3
+meeting_notes,Meeting Notes Agent,4.8,356,210,100,35,8,3
+content_generator,Content Generator Agent,4.3,267,130,90,35,8,4
+budget_analyzer,Budget Analyzer Agent,4.4,198,100,65,25,5,3
