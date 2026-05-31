@@ -6,7 +6,7 @@ AgentStore is a student-built marketplace where AI agents can be discovered, bui
 Emmanuel Akwasi Opoku
 Vu Chau
 
-## Cohorts
+## Cohorts!
 
 This project is designed for two TechX cohorts:
 
