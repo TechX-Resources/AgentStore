@@ -6,6 +6,7 @@ AgentStore is a student-built marketplace where AI agents can be discovered, bui
 Emmanuel Akwasi Opoku
 Vu Chau
 Justin Wang
+Jeremy
 
 ## Cohorts!
 
