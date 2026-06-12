@@ -124,6 +124,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) and [STUDENT_ONBOARDING.md](STUDENT_ONBOA
 - [docs/user-stories.md](docs/user-stories.md) — User stories
 - [docs/architecture.md](docs/architecture.md) — System architecture
 
+# AgentStore
+
+This repository contains AI agents and tools.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
