@@ -7,7 +7,7 @@ Emmanuel Akwasi Opoku
 Vu Chau
 Justin Wang
 
-## Cohorts
+## Cohorts!
 
 This project is designed for two TechX cohorts:
 
