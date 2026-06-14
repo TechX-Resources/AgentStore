@@ -12,10 +12,22 @@
     "date": "2026-05-22"
   },
   {
+    "agent_id": "email_summarizer",
+    "rating": 1,
+    "review": "Missed critical emails entirely and the summaries were too vague to be useful.",
+    "date": "2026-06-07"
+  },
+  {
     "agent_id": "github_issue_triage",
     "rating": 5,
     "review": "Perfect for our open source project. Label suggestions are spot on.",
     "date": "2026-05-18"
+  },
+  {
+    "agent_id": "github_issue_triage",
+    "rating": 3,
+    "review": "Label suggestions are helpful but priority ranking feels off for complex issues.",
+    "date": "2026-05-27"
   },
   {
     "agent_id": "meeting_notes",
@@ -30,10 +42,22 @@
     "date": "2026-05-27"
   },
   {
+    "agent_id": "meeting_notes",
+    "rating": 1,
+    "review": "Transcription was completely inaccurate and the action items were assigned to the wrong people.",
+    "date": "2026-05-26"
+  },
+  {
     "agent_id": "resume_reviewer",
     "rating": 5,
     "review": "Got actionable feedback that helped me land interviews. Highly recommend.",
     "date": "2026-05-15"
+  },
+  {
+    "agent_id": "resume_reviewer",
+    "rating": 3,
+    "review": "Caught formatting issues well but the content suggestions could be more tailored to my industry.",
+    "date": "2026-06-13"
   },
   {
     "agent_id": "travel_deal_finder",
@@ -42,9 +66,21 @@
     "date": "2026-05-19"
   },
   {
+    "agent_id": "travel_deal_finder",
+    "rating": 2,
+    "review": "Found some flights but the price comparisons were outdated and hotel options were very limited.",
+    "date": "2026-06-12"
+  },
+  {
     "agent_id": "study_buddy",
     "rating": 4,
     "review": "Flashcards are great for exam prep. Study plans could be more customizable.",
     "date": "2026-05-21"
+  },
+  {
+    "agent_id": "study_buddy",
+    "rating": 2,
+    "review": "Study plans were a good starting point but flashcards felt repetitive and lacked variety.",
+    "date": "2026-06-11"
   }
 ]
