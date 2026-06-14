@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { fetchAgent, runAgent, fetchReviews, addReview, forkAgent, type Agent, type Review, type Trace } from '../api/client'
 import StarRating from '../components/StarRating'
 import { AgentDetailSkeleton } from '../components/SkeletonLoader'
+import { getCategoryIcon, StarIcon, DownloadIcon, GitForkIcon, TerminalIcon, KeyIcon, ToolIcon } from '../components/Icons'
 
 export default function AgentDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -47,7 +48,7 @@ export default function AgentDetailPage() {
         setAgent(agentData)
         setReviews(reviewsData)
         
-        // Initialize inputs inputs default values
+        // Initialize inputs default values
         const defaults: Record<string, string> = {}
         if (agentData.inputs && agentData.inputs.properties) {
           Object.entries(agentData.inputs.properties).forEach(([key, prop]) => {
@@ -66,7 +67,6 @@ export default function AgentDetailPage() {
       })
   }, [id])
 
-  // Scroll terminal automatically during simulation steps
   useEffect(() => {
     if (running && terminalBottomRef.current) {
       terminalBottomRef.current.scrollIntoView({ behavior: 'smooth' })
@@ -77,7 +77,7 @@ export default function AgentDetailPage() {
   if (error || !agent) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem 1rem' }}>
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.75rem' }}>Agent Not Found</h2>
+        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem' }}>Agent Not Found</h2>
         <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
           Could not locate listing ID: {id}
         </p>
@@ -101,7 +101,6 @@ export default function AgentDetailPage() {
       const trace = await runAgent(agent.id, inputsState)
       setRunTrace(trace)
       
-      // Animate execution logs stepping
       let stepIdx = 0
       const interval = setInterval(() => {
         setCurrentStepIndex(stepIdx)
@@ -135,7 +134,7 @@ export default function AgentDetailPage() {
     }
   }
 
-  // Handle simulated install count
+  // Handle simulated install
   const handleInstallToggle = () => {
     if (installed) {
       setInstalled(false)
@@ -160,7 +159,6 @@ export default function AgentDetailPage() {
         user: reviewName.trim() || 'Anonymous Developer'
       })
       
-      // Update reviews list and recalculate average
       const updatedReviews = [newReview, ...reviews]
       setReviews(updatedReviews)
       
@@ -171,7 +169,6 @@ export default function AgentDetailPage() {
         rating: avg
       })
 
-      // Reset form
       setReviewName('')
       setReviewRating(5)
       setReviewComment('')
@@ -182,7 +179,6 @@ export default function AgentDetailPage() {
     }
   }
 
-  // Reviews distribution analytics calculations
   const totalReviews = reviews.length
   const distribution = [0, 0, 0, 0, 0] // 5, 4, 3, 2, 1
   reviews.forEach((r) => {
@@ -194,7 +190,7 @@ export default function AgentDetailPage() {
 
   return (
     <div className="fade-in" style={{ position: 'relative' }}>
-      <Link to="/agents" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1.5rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+      <Link to="/agents" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1.5rem', fontWeight: 600, color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
         ← Back to Marketplace
       </Link>
 
@@ -202,55 +198,53 @@ export default function AgentDetailPage() {
       <div style={{
         background: 'var(--glass-bg)',
         border: '1px solid var(--glass-border)',
-        borderRadius: '20px',
+        borderRadius: '0px',
         padding: '2rem',
         marginBottom: '2rem',
         display: 'flex',
         alignItems: 'center',
         gap: '2rem',
         flexWrap: 'wrap',
-        boxShadow: var(--glass-shadow)
       }}>
         {/* Glowing avatar ring */}
         <div style={{
           width: '72px',
           height: '72px',
-          borderRadius: '20px',
-          background: 'var(--gradient-primary)',
+          borderRadius: '0px',
+          background: 'transparent',
+          border: '2px solid var(--color-primary)',
           display: 'flex',
           alignItems: 'center',
-          justify-content: 'center',
-          fontSize: '2rem',
-          boxShadow: '0 0 20px rgba(99, 102, 241, 0.4)'
+          justifyContent: 'center',
+          color: 'var(--color-primary)',
+          boxShadow: '0 0 16px rgba(199, 120, 221, 0.2)'
         }}>
-          {agent.category === 'Productivity' ? '⚡' :
-           agent.category === 'Developer Tools' ? '💻' :
-           agent.category === 'Career' ? '🎯' :
-           agent.category === 'Data Analysis' ? '📊' :
-           agent.category === 'Education' ? '🎓' :
-           agent.category === 'Travel' ? '✈️' :
-           agent.category === 'Communication' ? '💬' : '💰'}
+          {getCategoryIcon(agent.category, 36, 'var(--color-primary)')}
         </div>
         
         <div style={{ flex: 1, minWidth: '280px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 800 }}>{agent.name}</h1>
-            <span className="category">{agent.category}</span>
+            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.75rem', fontWeight: 700 }}>{agent.name}</h1>
+            <span className="category" style={{ borderRadius: '0px', borderColor: 'var(--color-primary)', color: 'var(--color-primary)', background: 'transparent' }}>
+              {agent.category}
+            </span>
           </div>
-          <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '1rem', lineHeight: 1.5 }}>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '0.9rem', lineHeight: 1.5 }}>
             {agent.description}
           </p>
           <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-              <StarRating rating={agent.rating} size={16} />
-              <strong style={{ color: 'var(--color-warning)', fontSize: '0.95rem' }}>{agent.rating.toFixed(1)}</strong>
-              <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>({totalReviews} reviews)</span>
+              <StarRating rating={agent.rating} size={14} />
+              <strong style={{ color: 'var(--color-warning)', fontSize: '0.9rem' }}>{agent.rating.toFixed(1)}</strong>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>({totalReviews} reviews)</span>
             </div>
-            <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-              📥 <strong>{agent.downloads.toLocaleString()}</strong> downloads
+            <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <DownloadIcon size={14} color="var(--text-muted)" />
+              <strong>{agent.downloads.toLocaleString()}</strong> downloads
             </div>
-            <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-              ⚡ <strong>{agent.runs.toLocaleString()}</strong> mock runs
+            <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <TerminalIcon size={14} color="var(--text-muted)" />
+              <strong>{agent.runs.toLocaleString()}</strong> mock runs
             </div>
           </div>
         </div>
@@ -270,10 +264,12 @@ export default function AgentDetailPage() {
           <div style={{
             background: 'var(--glass-bg)',
             border: '1px solid var(--glass-border)',
-            borderRadius: '16px',
+            borderRadius: '0px',
             padding: '1.5rem',
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: 700 }}>Workspace Actions</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '1rem', fontWeight: 600 }}>
+              <span className="harsh-style">#</span>actions
+            </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <button
                 onClick={handleInstallToggle}
@@ -281,13 +277,12 @@ export default function AgentDetailPage() {
                 className="btn btn-primary"
                 style={{
                   width: '100%',
-                  background: installed ? 'rgba(16, 185, 129, 0.15)' : undefined,
+                  background: installed ? 'rgba(152, 195, 121, 0.1)' : undefined,
                   color: installed ? 'var(--color-accent)' : undefined,
-                  borderColor: installed ? 'rgba(16, 185, 129, 0.3)' : undefined,
-                  boxShadow: installed ? 'none' : undefined
+                  borderColor: installed ? 'var(--color-accent)' : undefined,
                 }}
               >
-                {installing ? '⏳ Deploying...' : installed ? '✅ Installed in Workspace' : '📥 Install Agent'}
+                {installing ? '⏳ deploying...' : installed ? '✅ installed' : 'install-agent <~>'}
               </button>
               
               <button
@@ -298,7 +293,7 @@ export default function AgentDetailPage() {
                 className="btn btn-secondary"
                 style={{ width: '100%' }}
               >
-                🍴 Fork & Remix
+                fork-remix &ge;
               </button>
             </div>
           </div>
@@ -307,31 +302,33 @@ export default function AgentDetailPage() {
           <div style={{
             background: 'var(--glass-bg)',
             border: '1px solid var(--glass-border)',
-            borderRadius: '16px',
+            borderRadius: '0px',
             padding: '1.5rem',
-            fontSize: '0.9rem'
+            fontSize: '0.85rem'
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: 700 }}>Specifications</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '1rem', fontWeight: 600 }}>
+              <span className="harsh-style">#</span>specs
+            </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', lineHeight: 1.6 }}>
               <div>
-                <span style={{ color: 'var(--text-muted)' }}>Created By:</span>
-                <div style={{ fontWeight: 600 }}>{agent.creator}</div>
+                <span style={{ color: 'var(--text-muted)' }}>creator:</span>
+                <div style={{ fontWeight: 600, color: 'white' }}>{agent.creator}</div>
               </div>
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '0.5rem' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Current Version:</span>
-                <div style={{ fontWeight: 600 }}>v{agent.version}</div>
+              <div style={{ borderTop: '1px dashed rgba(171, 178, 191, 0.15)', paddingTop: '0.5rem' }}>
+                <span style={{ color: 'var(--text-muted)' }}>version:</span>
+                <div style={{ fontWeight: 600, color: 'white' }}>v{agent.version}</div>
               </div>
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '0.5rem' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Required Permissions:</span>
+              <div style={{ borderTop: '1px dashed rgba(171, 178, 191, 0.15)', paddingTop: '0.5rem' }}>
+                <span style={{ color: 'var(--text-muted)' }}>permissions:</span>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginTop: '0.25rem' }}>
                   {agent.permissions_required && agent.permissions_required.length > 0 ? (
                     agent.permissions_required.map((p) => (
-                      <span key={p} style={{ fontSize: '0.75rem', background: 'rgba(239, 68, 68, 0.1)', color: '#f87171', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>
+                      <span key={p} style={{ fontSize: '0.7rem', background: 'rgba(224, 108, 117, 0.08)', color: 'var(--color-danger)', border: '1px solid rgba(224, 108, 117, 0.15)', padding: '0.1rem 0.4rem', borderRadius: '0px' }}>
                         🔑 {p}
                       </span>
                     ))
                   ) : (
-                    <span style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>None required</span>
+                    <span style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>none</span>
                   )}
                 </div>
               </div>
@@ -342,27 +339,29 @@ export default function AgentDetailPage() {
           <div style={{
             background: 'var(--glass-bg)',
             border: '1px solid var(--glass-border)',
-            borderRadius: '16px',
+            borderRadius: '0px',
             padding: '1.5rem',
-            fontSize: '0.9rem'
+            fontSize: '0.85rem'
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '1rem', fontWeight: 700 }}>Version History</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', marginBottom: '1rem', fontWeight: 600 }}>
+              <span className="harsh-style">#</span>changelog
+            </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600 }}>
-                  <span>v{agent.version} (Latest)</span>
-                  <span style={{ color: 'var(--color-accent)' }}>Active</span>
+                  <span>v{agent.version} (latest)</span>
+                  <span style={{ color: 'var(--color-accent)' }}>active</span>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.15rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '0.15rem', lineHeight: 1.4 }}>
                   Optimization changes for LLM prompts and mock-tool latency.
                 </p>
               </div>
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '0.65rem' }}>
+              <div style={{ borderTop: '1px dashed rgba(171, 178, 191, 0.15)', paddingTop: '0.65rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 500, color: 'var(--text-secondary)' }}>
                   <span>v1.0.0</span>
-                  <span style={{ color: 'var(--text-muted)' }}>Legacy</span>
+                  <span style={{ color: 'var(--text-muted)' }}>legacy</span>
                 </div>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.15rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '0.15rem', lineHeight: 1.4 }}>
                   Initial marketplace deployment.
                 </p>
               </div>
@@ -377,10 +376,12 @@ export default function AgentDetailPage() {
           <div style={{
             background: 'var(--glass-bg)',
             border: '1px solid var(--glass-border)',
-            borderRadius: '16px',
+            borderRadius: '0px',
             padding: '1.5rem',
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', marginBottom: '1rem', fontWeight: 700 }}>Required Tools</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', marginBottom: '1rem', fontWeight: 600 }}>
+              <span className="harsh-style">#</span>required-tools
+            </h3>
             {agent.tools_required && agent.tools_required.length > 0 ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
                 {agent.tools_required.map((toolId) => (
@@ -390,7 +391,7 @@ export default function AgentDetailPage() {
                     style={{
                       background: 'rgba(255, 255, 255, 0.02)',
                       border: '1px solid var(--glass-border)',
-                      borderRadius: '12px',
+                      borderRadius: '0px',
                       padding: '1rem',
                       display: 'flex',
                       alignItems: 'center',
@@ -399,27 +400,27 @@ export default function AgentDetailPage() {
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = 'var(--color-primary)'
-                      e.currentTarget.style.background = 'rgba(99, 102, 241, 0.04)'
+                      e.currentTarget.style.background = 'rgba(199, 120, 221, 0.03)'
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor = 'var(--glass-border)'
                       e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)'
                     }}
                   >
-                    <span style={{ fontSize: '1.5rem' }}>⚙️</span>
+                    <ToolIcon size={20} color="var(--color-primary)" />
                     <div>
-                      <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.85rem' }}>
                         {toolId.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
-                        View schema details →
+                        view-schema &ge;
                       </div>
                     </div>
                   </Link>
                 ))}
               </div>
             ) : (
-              <div style={{ fontStyle: 'italic', color: 'var(--text-muted)' }}>This agent doesn't require any external registry tools.</div>
+              <div style={{ fontStyle: 'italic', color: 'var(--text-muted)', fontSize: '0.85rem' }}>This agent doesn't require any registry tools.</div>
             )}
           </div>
 
@@ -427,13 +428,15 @@ export default function AgentDetailPage() {
           <div style={{
             background: 'var(--glass-bg)',
             border: '1px solid var(--glass-border)',
-            borderRadius: '16px',
+            borderRadius: '0px',
             padding: '1.5rem',
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem'
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 700 }}>Data Schemas</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 600 }}>
+              <span className="harsh-style">#</span>data-schemas
+            </h3>
             
             {/* Input Schema */}
             <div>
@@ -442,32 +445,33 @@ export default function AgentDetailPage() {
                 style={{
                   width: '100%',
                   display: 'flex',
-                  justify-content: 'space-between',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  background: 'rgba(255, 255, 255, 0.03)',
+                  background: 'rgba(255, 255, 255, 0.02)',
                   border: '1px solid var(--glass-border)',
                   padding: '0.75rem 1rem',
-                  borderRadius: '8px',
+                  borderRadius: '0px',
                   cursor: 'pointer',
                   fontWeight: 600,
-                  fontSize: '0.9rem',
-                  color: 'var(--text-primary)'
+                  fontSize: '0.85rem',
+                  color: 'var(--text-primary)',
+                  fontFamily: 'inherit'
                 }}
               >
-                <span>📥 Input Schema Declaration</span>
-                <span>{inputsOpen ? '▼' : '▶'}</span>
+                <span>📥 input-schema</span>
+                <span>{inputsOpen ? '[-]' : '[+]'}</span>
               </button>
               {inputsOpen && (
                 <pre style={{
-                  background: 'rgba(7, 9, 19, 0.4)',
+                  background: '#282C33',
                   border: '1px solid var(--glass-border)',
                   borderTop: 'none',
                   padding: '1rem',
-                  borderRadius: '0 0 8px 8px',
+                  borderRadius: '0px',
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: '0.75rem',
                   overflowX: 'auto',
-                  color: '#c7d2fe'
+                  color: 'var(--color-warning)'
                 }}>
                   {JSON.stringify(agent.inputs, null, 2)}
                 </pre>
@@ -481,32 +485,33 @@ export default function AgentDetailPage() {
                 style={{
                   width: '100%',
                   display: 'flex',
-                  justify-content: 'space-between',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  background: 'rgba(255, 255, 255, 0.03)',
+                  background: 'rgba(255, 255, 255, 0.02)',
                   border: '1px solid var(--glass-border)',
                   padding: '0.75rem 1rem',
-                  borderRadius: '8px',
+                  borderRadius: '0px',
                   cursor: 'pointer',
                   fontWeight: 600,
-                  fontSize: '0.9rem',
-                  color: 'var(--text-primary)'
+                  fontSize: '0.85rem',
+                  color: 'var(--text-primary)',
+                  fontFamily: 'inherit'
                 }}
               >
-                <span>📤 Output Schema Declaration</span>
-                <span>{outputsOpen ? '▼' : '▶'}</span>
+                <span>📤 output-schema</span>
+                <span>{outputsOpen ? '[-]' : '[+]'}</span>
               </button>
               {outputsOpen && (
                 <pre style={{
-                  background: 'rgba(7, 9, 19, 0.4)',
+                  background: '#282C33',
                   border: '1px solid var(--glass-border)',
                   borderTop: 'none',
                   padding: '1rem',
-                  borderRadius: '0 0 8px 8px',
+                  borderRadius: '0px',
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: '0.75rem',
                   overflowX: 'auto',
-                  color: '#c7d2fe'
+                  color: 'var(--color-warning)'
                 }}>
                   {JSON.stringify(agent.outputs, null, 2)}
                 </pre>
@@ -516,48 +521,47 @@ export default function AgentDetailPage() {
 
           {/* Running Terminal Simulator */}
           <div style={{
-            background: '#070913',
-            border: '1px solid #1e293b',
-            borderRadius: '16px',
+            background: '#21252b',
+            border: '1px solid var(--glass-border)',
+            borderRadius: '0px',
             overflow: 'hidden',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)'
           }}>
             {/* Terminal Header */}
             <div style={{
-              background: '#0f172a',
-              borderBottom: '1px solid #1e293b',
+              background: '#1e2227',
+              borderBottom: '1px solid var(--glass-border)',
               padding: '0.75rem 1.25rem',
               display: 'flex',
-              justify-content: 'space-between',
+              justifyContent: 'space-between',
               alignItems: 'center'
             }}>
               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
-                <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#eab308', display: 'inline-block' }} />
-                <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
-                <span style={{ marginLeft: '0.5rem', color: '#64748b', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>SIMULATOR_TERMINAL.SH</span>
+                <span style={{ width: '8px', height: '8px', background: 'var(--color-danger)', display: 'inline-block' }} />
+                <span style={{ width: '8px', height: '8px', background: 'var(--color-warning)', display: 'inline-block' }} />
+                <span style={{ width: '8px', height: '8px', background: 'var(--color-accent)', display: 'inline-block' }} />
+                <span style={{ marginLeft: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)' }}>simulator_terminal.sh</span>
               </div>
-              <span style={{ color: '#22c55e', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 800 }}>RUNNING ONLINE</span>
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.75rem', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>active</span>
             </div>
 
             {/* Inputs Config Forms */}
-            <form onSubmit={handleExecute} style={{ padding: '1.25rem', borderBottom: '1px solid #1e293b', background: '#0a0d1e' }}>
-              <h4 style={{ fontFamily: 'var(--font-heading)', color: 'white', marginBottom: '0.75rem', fontSize: '1rem', fontWeight: 600 }}>Setup Custom Parameters</h4>
+            <form onSubmit={handleExecute} style={{ padding: '1.25rem', borderBottom: '1px solid var(--glass-border)', background: '#21252b' }}>
+              <h4 style={{ fontFamily: 'var(--font-heading)', color: 'white', marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: 600 }}>Setup Custom Parameters</h4>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {agent.inputs && agent.inputs.properties && (
                   Object.entries(agent.inputs.properties).map(([key, prop]) => (
                     <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                      <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600, textTransform: 'capitalize' }}>
+                      <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
                         {key.replace(/_/g, ' ')}
-                        {prop.description && <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginLeft: '0.35rem', textTransform: 'none' }}>({prop.description})</span>}
+                        {prop.description && <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem', marginLeft: '0.35rem' }}>({prop.description})</span>}
                       </label>
                       {prop.enum ? (
                         <select
                           value={inputsState[key] || ''}
                           onChange={(e) => setInputsState({ ...inputsState, [key]: e.target.value })}
                           className="form-input"
-                          style={{ background: '#0f172a', borderColor: '#1e293b' }}
+                          style={{ background: '#282C33', borderColor: 'var(--glass-border)' }}
                         >
                           {prop.enum.map((opt) => (
                             <option key={opt} value={opt}>{opt}</option>
@@ -571,23 +575,23 @@ export default function AgentDetailPage() {
                           placeholder={`Enter ${key.replace(/_/g, ' ')} value...`}
                           onChange={(e) => setInputsState({ ...inputsState, [key]: e.target.value })}
                           className="form-input"
-                          style={{ background: '#0f172a', borderColor: '#1e293b' }}
+                          style={{ background: '#282C33', borderColor: 'var(--glass-border)' }}
                         />
                       )}
                     </div>
                   ))
                 )}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginTop: '0.5rem' }}>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                    💡 Select or type parameters above to customize execution outcomes.
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+                    // Select parameters above to customize execution outcomes.
                   </div>
                   <button
                     type="submit"
                     disabled={running}
                     className="btn btn-primary"
-                    style={{ background: running ? '#64748b' : undefined, color: 'white', border: 'none', padding: '0.6rem 1.25rem', whiteSpace: 'nowrap' }}
+                    style={{ padding: '0.5rem 1.25rem', whiteSpace: 'nowrap' }}
                   >
-                    {running ? '⏳ Executing...' : '▶ Run Agent Workspace'}
+                    {running ? 'Executing...' : 'run-agent <~>'}
                   </button>
                 </div>
               </div>
@@ -595,19 +599,18 @@ export default function AgentDetailPage() {
 
             {/* Terminal Log Console */}
             <div style={{
-              background: '#030712',
+              background: '#282C33',
               padding: '1.25rem',
-              height: '320px',
+              height: '300px',
               overflowY: 'auto',
               fontFamily: 'var(--font-mono)',
-              fontSize: '0.82rem',
+              fontSize: '0.8rem',
               lineHeight: 1.6,
-              color: '#34d399',
+              color: 'var(--color-accent)',
             }}>
-              {/* Startup text */}
-              <div style={{ color: '#64748b' }}>// AgentStore simulated runtime debugger. Ready.</div>
+              <div style={{ color: 'var(--text-muted)' }}>// AgentStore simulated runtime debugger. Ready.</div>
               {agent.example_prompts && agent.example_prompts.length > 0 && (
-                <div style={{ color: '#4b5563', margin: '0.25rem 0' }}>
+                <div style={{ color: 'var(--text-muted)', margin: '0.25rem 0' }}>
                   Example Prompts: {agent.example_prompts.map(p => `"${p}"`).join(' | ')}
                 </div>
               )}
@@ -615,42 +618,42 @@ export default function AgentDetailPage() {
               {/* Trace steps */}
               {runTrace && runTrace.steps && (
                 <div style={{ marginTop: '0.75rem' }}>
-                  <div style={{ color: '#3b82f6', fontWeight: 600 }}>$ agentstore-cli --run {agent.id} --input '{JSON.stringify(inputsState)}'</div>
+                  <div style={{ color: 'var(--color-info)' }}>$ agentstore-cli --run {agent.id} --input '{JSON.stringify(inputsState)}'</div>
                   {runTrace.steps.map((step, idx) => {
                     const show = idx <= currentStepIndex
                     if (!show) return null
                     return (
-                      <div key={idx} className="fade-in" style={{ margin: '0.35rem 0', color: step.tool ? '#a855f7' : '#34d399' }}>
-                        <span style={{ color: '#64748b' }}>[{new Date(runTrace.started_at).toLocaleTimeString()}]</span>{' '}
+                      <div key={idx} className="fade-in" style={{ margin: '0.35rem 0', color: step.tool ? 'var(--color-primary)' : 'var(--color-accent)' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>[{new Date(runTrace.started_at).toLocaleTimeString()}]</span>{' '}
                         <strong>[Step {step.step}] {step.action}</strong>
-                        {step.details && <span style={{ color: '#9ca3af' }}> — {step.details}</span>}
-                        {step.tool && <span style={{ color: '#c084fc' }}> (Target Tool: {step.tool})</span>}
-                        {step.output_summary && <div style={{ color: '#c084fc', paddingLeft: '1.5rem', fontSize: '0.78rem' }}>↳ Tool Result: {step.output_summary}</div>}
+                        {step.details && <span style={{ color: 'var(--text-secondary)' }}> — {step.details}</span>}
+                        {step.tool && <span style={{ color: 'var(--color-secondary)' }}> (Target Tool: {step.tool})</span>}
+                        {step.output_summary && <div style={{ color: 'var(--color-secondary)', paddingLeft: '1.5rem', fontSize: '0.75rem' }}>↳ Tool Result: {step.output_summary}</div>}
                       </div>
                     )
                   })}
                 </div>
               )}
 
-              {/* Show running state dots loader */}
+              {/* Show running state loader */}
               {running && (
-                <div style={{ margin: '0.5rem 0', color: '#60a5fa', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <div style={{ margin: '0.5rem 0', color: 'var(--color-info)', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                   <span>⏳ Processing remote node vectors</span>
-                  <span className="trending-pulse" style={{ background: '#3b82f6', width: '8px', height: '8px' }} />
+                  <span className="trending-pulse" style={{ background: 'var(--color-info)', width: '6px', height: '6px' }} />
                 </div>
               )}
 
               {/* Output block display */}
               {runTrace && currentStepIndex >= runTrace.steps.length - 1 && (
-                <div className="fade-in" style={{ marginTop: '1.25rem', borderTop: '1px dashed #1e293b', paddingTop: '1rem' }}>
-                  <div style={{ color: '#10b981', fontWeight: 800, marginBottom: '0.5rem' }}>🟢 RUN COMPLETED [STATUS: 200 OK]</div>
+                <div className="fade-in" style={{ marginTop: '1.25rem', borderTop: '1px dashed rgba(171, 178, 191, 0.15)', paddingTop: '1rem' }}>
+                  <div style={{ color: 'var(--color-accent)', fontWeight: 800, marginBottom: '0.5rem' }}>🟢 RUN COMPLETED [STATUS: 200 OK]</div>
                   <pre style={{
-                    background: '#090d16',
-                    border: '1px solid #1e293b',
+                    background: '#21252b',
+                    border: '1px solid var(--glass-border)',
                     padding: '0.85rem',
-                    borderRadius: '8px',
-                    color: '#a7f3d0',
-                    fontSize: '0.78rem',
+                    borderRadius: '0px',
+                    color: 'var(--color-warning)',
+                    fontSize: '0.75rem',
                     overflowX: 'auto',
                   }}>
                     {JSON.stringify(runTrace.final_output, null, 2)}
@@ -665,23 +668,25 @@ export default function AgentDetailPage() {
           <div style={{
             background: 'var(--glass-bg)',
             border: '1px solid var(--glass-border)',
-            borderRadius: '16px',
+            borderRadius: '0px',
             padding: '1.5rem',
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', marginBottom: '1.5rem', fontWeight: 700 }}>Ratings & Reviews</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', marginBottom: '1.5rem', fontWeight: 600 }}>
+              <span className="harsh-style">#</span>ratings-and-reviews
+            </h3>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
               
               {/* Ratings Distribution graph */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '3rem', fontWeight: 800, fontFamily: 'var(--font-heading)', color: 'white' }}>{agent.rating.toFixed(1)}</span>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 600 }}>/ 5.0</span>
+                  <span style={{ fontSize: '2.5rem', fontWeight: 700, fontFamily: 'var(--font-heading)', color: 'white' }}>{agent.rating.toFixed(1)}</span>
+                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>/ 5.0</span>
                 </div>
-                <div style={{ marginBottom: '0.5rem' }}>
-                  <StarRating rating={agent.rating} size={20} />
+                <div style={{ marginBottom: '0.25rem' }}>
+                  <StarRating rating={agent.rating} size={18} />
                 </div>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>Based on {totalReviews} reviews</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Based on {totalReviews} reviews</span>
               </div>
 
               {/* Graphical bars */}
@@ -690,12 +695,12 @@ export default function AgentDetailPage() {
                   const stars = 5 - idx
                   const pct = totalReviews > 0 ? (count / totalReviews) * 100 : 0
                   return (
-                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.8rem' }}>
-                      <span style={{ width: '40px', textAlign: 'right', color: 'var(--text-secondary)', fontWeight: 600 }}>{stars} Star</span>
-                      <div style={{ flex: 1, height: '8px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '4px', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', background: 'var(--gradient-primary)', width: `${pct}%`, borderRadius: '4px' }} />
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.75rem' }}>
+                      <span style={{ width: '40px', textAlign: 'right', color: 'var(--text-secondary)' }}>{stars} Star</span>
+                      <div style={{ flex: 1, height: '6px', background: 'rgba(255, 255, 255, 0.05)', borderRadius: '0px', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', background: 'var(--color-primary)', width: `${pct}%` }} />
                       </div>
-                      <span style={{ width: '30px', color: 'var(--text-muted)' }}>{count}</span>
+                      <span style={{ width: '25px', color: 'var(--text-muted)', textAlign: 'right' }}>{count}</span>
                     </div>
                   )
                 })}
@@ -704,33 +709,34 @@ export default function AgentDetailPage() {
 
             {/* Write a review form */}
             <form onSubmit={handleReviewSubmit} style={{
-              background: 'rgba(255, 255, 255, 0.02)',
+              background: '#282C33',
               border: '1px solid var(--glass-border)',
-              borderRadius: '12px',
+              borderRadius: '0px',
               padding: '1.25rem',
               marginBottom: '2rem'
             }}>
-              <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.05rem', marginBottom: '1rem' }}>Write an Agent Review</h4>
+              <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '0.95rem', marginBottom: '1rem', color: 'white' }}>Write an Agent Review</h4>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Your Name</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Your Name</label>
                   <input
                     type="text"
                     placeholder="e.g. John Doe"
                     value={reviewName}
                     onChange={(e) => setReviewName(e.target.value)}
                     className="form-input"
+                    style={{ background: 'var(--bg-secondary)' }}
                   />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                  <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Assign Rating</label>
+                  <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Assign Rating</label>
                   <div style={{ height: '38px', display: 'flex', alignItems: 'center' }}>
-                    <StarRating rating={reviewRating} interactive={true} size={20} onChange={setReviewRating} />
+                    <StarRating rating={reviewRating} interactive={true} size={18} onChange={setReviewRating} />
                   </div>
                 </div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginBottom: '1rem' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Review Comments</label>
+                <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Review Comments</label>
                 <textarea
                   required
                   rows={3}
@@ -738,7 +744,7 @@ export default function AgentDetailPage() {
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
                   className="form-input"
-                  style={{ resize: 'vertical', minHeight: '80px' }}
+                  style={{ resize: 'vertical', minHeight: '80px', background: 'var(--bg-secondary)' }}
                 />
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -746,9 +752,9 @@ export default function AgentDetailPage() {
                   type="submit"
                   disabled={submittingReview}
                   className="btn btn-primary"
-                  style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}
+                  style={{ padding: '0.45rem 1.25rem', fontSize: '0.85rem' }}
                 >
-                  {submittingReview ? '⏳ Submitting...' : 'Submit Feedback'}
+                  {submittingReview ? 'Submitting...' : 'submit-feedback'}
                 </button>
               </div>
             </form>
@@ -758,23 +764,23 @@ export default function AgentDetailPage() {
               {reviews.length > 0 ? (
                 reviews.map((rev, idx) => (
                   <div key={idx} className="fade-in" style={{
-                    borderBottom: idx < reviews.length - 1 ? '1px solid rgba(255, 255, 255, 0.05)' : 'none',
+                    borderBottom: idx < reviews.length - 1 ? '1px dashed rgba(171, 178, 191, 0.15)' : 'none',
                     paddingBottom: idx < reviews.length - 1 ? '1.25rem' : '0'
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>{rev.user}</span>
-                      <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{rev.date}</span>
+                      <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'white' }}>{rev.user}</span>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>{rev.date}</span>
                     </div>
                     <div style={{ margin: '0.25rem 0' }}>
-                      <StarRating rating={rev.rating} size={14} />
+                      <StarRating rating={rev.rating} size={12} />
                     </div>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', lineHeight: 1.5 }}>
                       {rev.review}
                     </p>
                   </div>
                 ))
               ) : (
-                <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-muted)', fontStyle: 'italic', fontSize: '0.85rem' }}>
                   No reviews submitted yet for this agent listing. Be the first to write one!
                 </div>
               )}
@@ -791,29 +797,31 @@ export default function AgentDetailPage() {
           left: 0,
           width: '100%',
           height: '100%',
-          background: 'rgba(0, 0, 0, 0.7)',
-          backdropFilter: 'blur(8px)',
+          background: 'rgba(0, 0, 0, 0.75)',
+          backdropFilter: 'blur(4px)',
           display: 'flex',
           alignItems: 'center',
-          justify-content: 'center',
+          justifyContent: 'center',
           zIndex: 1000
         }}>
           <div className="fade-in" style={{
             background: 'var(--bg-secondary)',
-            border: '1px solid var(--glass-hover-border)',
-            borderRadius: '16px',
+            border: '1px solid var(--color-primary)',
+            borderRadius: '0px',
             padding: '2rem',
             width: '90%',
             maxWidth: '450px',
-            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)'
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
           }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>fork & Customize Agent</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem', color: 'white' }}>
+              <span className="harsh-style">#</span>fork-customize-agent
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.8rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
               Create a derivative copy of <strong>{agent.name}</strong>. You'll be registered as the creator and can run customized instances.
             </p>
             <form onSubmit={handleRemixSubmit}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginBottom: '1.5rem' }}>
-                <label style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>New Listing Name</label>
+                <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>New Listing Name</label>
                 <input
                   type="text"
                   required
@@ -821,7 +829,7 @@ export default function AgentDetailPage() {
                   value={remixName}
                   onChange={(e) => setRemixName(e.target.value)}
                   className="form-input"
-                  style={{ background: 'var(--bg-primary)' }}
+                  style={{ background: 'var(--bg-primary)', width: '100%' }}
                 />
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
@@ -830,7 +838,7 @@ export default function AgentDetailPage() {
                   onClick={() => setShowRemix(false)}
                   disabled={remixing}
                   className="btn btn-secondary"
-                  style={{ padding: '0.5rem 1rem' }}
+                  style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}
                 >
                   Cancel
                 </button>
@@ -838,9 +846,9 @@ export default function AgentDetailPage() {
                   type="submit"
                   disabled={remixing}
                   className="btn btn-primary"
-                  style={{ padding: '0.5rem 1.25rem' }}
+                  style={{ padding: '0.4rem 1.25rem', fontSize: '0.8rem' }}
                 >
-                  {remixing ? '⏳ Remixing...' : 'Confirm Fork'}
+                  {remixing ? 'Forking...' : 'confirm-fork'}
                 </button>
               </div>
             </form>

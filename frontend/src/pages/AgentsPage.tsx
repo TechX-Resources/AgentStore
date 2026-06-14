@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import AgentCard from '../components/AgentCard'
 import { fetchAgents, type AgentSummary } from '../api/client'
 import { AgentGridSkeleton } from '../components/SkeletonLoader'
+import { SearchIcon, ShieldAlertIcon } from '../components/Icons'
 
 export default function AgentsPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -37,8 +38,7 @@ export default function AgentsPage() {
       })
       .catch((e) => setError(e.message))
       .finally(() => {
-        // Subtle simulated delay to showcase the beautiful skeleton loader shimmer
-        setTimeout(() => setLoading(false), 600)
+        setTimeout(() => setLoading(false), 500)
       })
   }, [])
 
@@ -75,8 +75,8 @@ export default function AgentsPage() {
   return (
     <div className="fade-in">
       <div style={{ marginBottom: '2rem' }}>
-        <h1 className="page-title">Discover AI Agents</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>
+        <h1 className="page-title"><span className="harsh-style">#</span>agents</h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
           Browse specialized AI workers for code analysis, travel planner feeds, data cleaning, and email summaries.
         </p>
       </div>
@@ -85,7 +85,7 @@ export default function AgentsPage() {
       <div style={{
         background: 'var(--glass-bg)',
         border: '1px solid var(--glass-border)',
-        borderRadius: '16px',
+        borderRadius: '0px',
         padding: '1.25rem',
         marginBottom: '2rem',
         display: 'flex',
@@ -94,10 +94,13 @@ export default function AgentsPage() {
       }}>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {/* Search bar */}
-          <div style={{ flex: 1, position: 'relative', minWidth: '260px' }}>
+          <div style={{ flex: 1, position: 'relative', minWidth: '260px', display: 'flex', alignItems: 'center' }}>
+            <span style={{ position: 'absolute', left: '1rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center' }}>
+              <SearchIcon size={16} />
+            </span>
             <input
               type="text"
-              placeholder="🔍 Search agents, tags, categories..."
+              placeholder="Search agents, tags, categories..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="form-input"
@@ -114,10 +117,10 @@ export default function AgentsPage() {
               className="form-input"
               style={{ background: 'var(--bg-secondary)', cursor: 'pointer' }}
             >
-              <option value="trending">🔥 Trending</option>
-              <option value="rating">⭐ Top Rated</option>
-              <option value="downloads">📥 Downloads</option>
-              <option value="name">🔤 Alphabetical</option>
+              <option value="trending">~ trending</option>
+              <option value="rating">~ top-rated</option>
+              <option value="downloads">~ downloads</option>
+              <option value="name">~ alphabetical</option>
             </select>
           </div>
         </div>
@@ -133,14 +136,14 @@ export default function AgentsPage() {
                 className="btn"
                 style={{
                   padding: '0.4rem 0.9rem',
-                  fontSize: '0.8rem',
-                  borderRadius: '20px',
-                  background: isActive ? 'var(--gradient-primary)' : 'rgba(255, 255, 255, 0.04)',
-                  color: isActive ? 'white' : 'var(--text-secondary)',
-                  border: isActive ? 'none' : '1px solid var(--glass-border)',
+                  fontSize: '0.75rem',
+                  borderRadius: '0px',
+                  background: isActive ? 'var(--color-primary)' : 'rgba(255, 255, 255, 0.03)',
+                  color: isActive ? '#21252b' : 'var(--text-secondary)',
+                  borderColor: isActive ? 'var(--color-primary)' : 'var(--glass-border)',
                 }}
               >
-                {cat}
+                {isActive ? `* ${cat}` : cat}
               </button>
             )
           })}
@@ -150,14 +153,15 @@ export default function AgentsPage() {
       {loading ? (
         <AgentGridSkeleton />
       ) : error ? (
-        <div className="placeholder-notice" style={{ borderColor: 'rgba(239, 68, 68, 0.2)', background: 'rgba(239, 68, 68, 0.08)', color: '#f87171' }}>
-          ⚠️ <strong>API Error:</strong> Could not retrieve agent manifests from the server ({error}). Running in offline sandbox simulation mode.
+        <div className="placeholder-notice" style={{ borderColor: 'var(--color-danger)', background: 'rgba(224, 108, 117, 0.08)', color: 'var(--color-danger)' }}>
+          <ShieldAlertIcon size={18} style={{ marginRight: '0.5rem' }} />
+          <strong>API Error:</strong> Could not retrieve agent manifests from the server ({error}). Running in offline sandbox simulation mode.
         </div>
       ) : filteredAgents.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 1rem', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '16px' }}>
-          <span style={{ fontSize: '3rem' }}>🔍</span>
-          <h3 style={{ marginTop: '1rem', fontFamily: 'var(--font-heading)', fontSize: '1.25rem' }}>No Agents Found</h3>
-          <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '0.9rem' }}>
+        <div style={{ textAlign: 'center', padding: '4rem 1rem', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}>
+          <span style={{ fontSize: '2.5rem', color: 'var(--color-primary)' }}>🤖</span>
+          <h3 style={{ marginTop: '1rem', fontFamily: 'var(--font-heading)', fontSize: '1.2rem', color: 'white' }}>No Agents Found</h3>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', fontSize: '0.85rem' }}>
             Try adjusting your search filters or select a different category.
           </p>
           <button
@@ -165,13 +169,13 @@ export default function AgentsPage() {
             className="btn btn-secondary"
             style={{ marginTop: '1.25rem' }}
           >
-            Clear Filters
+            clear-filters &lt;~&gt;
           </button>
         </div>
       ) : (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem', fontWeight: 600 }}>
-            <span>Showing {filteredAgents.length} agents</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.8rem', marginBottom: '1rem', fontWeight: 600 }}>
+            <span>// Showing {filteredAgents.length} agents</span>
             {categoryParam !== 'All' && <span>Filtered by Category: {categoryParam}</span>}
           </div>
           <div className="agent-grid">

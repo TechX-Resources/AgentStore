@@ -1,38 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+
 :root {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Fira Code', monospace;
   line-height: 1.6;
   
-  /* Color Palette */
-  --bg-primary: #070913;
-  --bg-secondary: #0d1127;
-  --bg-tertiary: #171c3a;
+  /* Color Palette (One Dark + Retro Coder) */
+  --bg-primary: #282C33;
+  --bg-secondary: #21252b;
+  --bg-tertiary: #353b45;
   
-  --text-primary: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-primary: #ffffff;
+  --text-secondary: #ABB2BF;
+  --text-muted: #828997;
   
-  --color-primary: #6366f1;     /* Indigo */
-  --color-secondary: #a855f7;   /* Purple */
-  --color-accent: #10b981;      /* Emerald Green */
-  --color-warning: #f59e0b;     /* Amber */
-  --color-danger: #ef4444;      /* Red */
-  --color-info: #0ea5e9;        /* Sky Blue */
+  --color-primary: #C778DD;     /* One Dark Purple */
+  --color-secondary: #FF79C6;   /* Pink */
+  --color-accent: #98C379;      /* One Dark Green */
+  --color-warning: #E5C07B;     /* One Dark Yellow */
+  --color-danger: #E06C75;      /* One Dark Red */
+  --color-info: #61AFEF;        /* One Dark Blue */
   
-  --gradient-primary: linear-gradient(135deg, #6366f1, #a855f7);
-  --gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
-  --gradient-hover: linear-gradient(135deg, #4f46e5, #9333ea);
-  --gradient-accent: linear-gradient(135deg, #10b981, #0ea5e9);
+  --gradient-primary: linear-gradient(135deg, #C778DD, #FF79C6);
+  --gradient-glow: linear-gradient(135deg, rgba(199, 120, 221, 0.15), rgba(255, 121, 198, 0.15));
+  --gradient-hover: linear-gradient(135deg, #b052c8, #ff4fa8);
+  --gradient-accent: linear-gradient(135deg, #98C379, #61AFEF);
   
-  /* Glassmorphism Variables */
-  --glass-bg: rgba(13, 17, 39, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --glass-hover-bg: rgba(23, 28, 58, 0.85);
-  --glass-hover-border: rgba(99, 102, 241, 0.4);
+  /* Retro Coder Variables */
+  --glass-bg: #21252b;
+  --glass-border: #ABB2BF;
+  --glass-shadow: none;
+  --glass-hover-bg: #282C33;
+  --glass-hover-border: #C778DD;
   
   /* Fonts */
-  --font-heading: 'Outfit', sans-serif;
-  --font-mono: 'Orbitron', monospace;
+  --font-heading: 'Fira Code', monospace;
+  --font-mono: 'Fira Code', monospace;
   
   color-scheme: dark;
 }

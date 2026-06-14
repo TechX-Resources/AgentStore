@@ -115,56 +115,58 @@ footer {
 }
 
 .placeholder-notice {
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  border-radius: 12px;
+  background: rgba(229, 192, 123, 0.1);
+  border: 1px solid rgba(229, 192, 123, 0.2);
+  border-radius: 0px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
-  color: #fbbf24;
+  color: var(--color-warning);
   display: flex;
   align-items: center;
   gap: 0.75rem;
   backdrop-filter: blur(8px);
 }
 
-/* Global Premium Button Styles */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.65rem 1.25rem;
-  border-radius: 8px;
+  border-radius: 0px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid var(--color-primary);
   outline: none;
+  background: transparent;
+  color: var(--text-primary);
 }
 
 .btn-primary {
-  background: var(--gradient-primary);
-  color: white;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  background: var(--color-primary);
+  color: #21252b;
+  border-color: var(--color-primary);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--gradient-hover);
+  background: transparent;
+  color: var(--color-primary);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 4px 12px rgba(199, 120, 221, 0.15);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
   border-color: var(--glass-border);
+  color: var(--text-secondary);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(171, 178, 191, 0.15);
+  border-color: var(--color-primary);
+  color: var(--text-primary);
   transform: translateY(-1px);
 }
 
@@ -174,11 +176,10 @@ footer {
   transform: none;
 }
 
-/* Input Styles */
 .form-input {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--glass-border);
-  border-radius: 8px;
+  border-radius: 0px;
   padding: 0.65rem 1rem;
   color: var(--text-primary);
   font-family: inherit;
@@ -258,7 +259,7 @@ footer {
 .stat-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 0px;
   padding: 1.5rem;
   text-align: center;
   transition: all 0.3s ease;
@@ -344,7 +345,7 @@ footer {
 .category-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 0px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
