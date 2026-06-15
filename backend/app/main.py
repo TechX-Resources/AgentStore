@@ -1,13 +1,13 @@
-"""AgentStore Backend — FastAPI placeholder application."""
+"""AgentStore Backend — FastAPI application."""
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import agents, tools, runs, ratings
+from app.routers import agents, tools, runs, ratings, health
 
 app = FastAPI(
     title="AgentStore API",
-    description="The App Store for Agents — backend API (skeleton)",
+    description="The App Store for Agents — backend API",
     version="0.1.0",
 )
 
@@ -19,22 +19,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(agents.router, prefix="/agents", tags=["agents"])
-app.include_router(tools.router, prefix="/tools", tags=["tools"])
-app.include_router(runs.router, prefix="/agents", tags=["runs"])
-app.include_router(ratings.router, prefix="/agents", tags=["ratings"])
+app.include_router(agents.router,  prefix="/agents",  tags=["agents"])
+app.include_router(tools.router,   prefix="/tools",   tags=["tools"])
+app.include_router(runs.router,    prefix="/agents",  tags=["runs"])
+app.include_router(ratings.router, prefix="/agents",  tags=["ratings"])
+app.include_router(health.router,  prefix="/health",  tags=["health"])
 
 
 @app.get("/")
 def root():
     return {
-        "name": "AgentStore API",
+        "name":    "AgentStore API",
         "tagline": "The App Store for Agents",
-        "status": "skeleton",
-        "docs": "/docs",
+        "version": "0.1.0",
+        "docs":    "/docs",
+        "health":  "/health",
     }
-
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
