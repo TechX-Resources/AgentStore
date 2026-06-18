@@ -1,37 +1,62 @@
 {
   "id": "resume_reviewer",
   "name": "Resume Reviewer Agent",
-  "description": "Reviews resume documents and provides actionable feedback for improvement.",
+  "description": "Reviews resume documents against industry standards and job requirements, providing tailored feedback, market trend insights, and scoring.",
   "category": "Career",
   "creator": "AgentStore Team",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "status": "published",
   "rating": 4.6,
   "downloads": 2100,
   "installs": 1500,
   "runs": 8900,
   "tags": ["career", "resume", "job-search"],
-  "tools_required": ["file_reader"],
-  "permissions_required": ["files.read"],
+  "tools_required": ["file_reader", "web_search"],
+  "permissions_required": ["files.read", "internet.access"],
   "inputs": {
     "type": "object",
     "properties": {
-      "file_path": { "type": "string" },
-      "target_role": { "type": "string" }
-    }
+      "file_path": { 
+        "type": "string", 
+        "description": "Path to the uploaded resume document (PDF/Word)." 
+      },
+      "target_role": { 
+        "type": "string", 
+        "description": "The job title or role being targeted for tailored analysis and real-time market trend alignment (optional)." 
+      }
+    },
+    "required": ["file_path"]
   },
   "outputs": {
     "type": "object",
     "properties": {
-      "overall_score": { "type": "number" },
-      "strengths": { "type": "array", "items": { "type": "string" } },
-      "improvements": { "type": "array", "items": { "type": "string" } },
-      "section_feedback": { "type": "object" }
-    }
+      "overall_score": { 
+        "type": "number", 
+        "minimum": 0, 
+        "maximum": 100, 
+        "description": "Resume quality score from 0 to 100 based on formatting, content, and market relevance." 
+      },
+      "strengths": { 
+        "type": "array", 
+        "items": { "type": "string" }, 
+        "description": "List of strong points and key competitive advantages identified in the resume." 
+      },
+      "improvements": { 
+        "type": "array", 
+        "items": { "type": "string" }, 
+        "description": "Actionable areas and critical gaps that need enhancement or adjustment." 
+      },
+      "section_feedback": { 
+        "type": "object", 
+        "description": "Detailed breakdowns and keyword optimization recommendations for sections like Experience, Skills, or Education." 
+      }
+    },
+    "required": ["overall_score", "strengths", "improvements"]
   },
-  "example_use_case": "Upload a resume and get tailored feedback for a software engineering role.",
+  "example_use_case": "Upload your resume and optionally specify a target job to get tailored formatting, content feedback, and keyword optimization based on real-time market trends.",
   "example_prompts": [
-    "Review my resume for a data scientist position",
-    "What sections of my resume need improvement?"
+    "Review /documents/resume_2026.pdf for a data scientist position",
+    "Analyze /downloads/cv.pdf and suggest improvements for a senior software engineer role",
+    "What sections of my uploaded resume need improvement?"
   ]
 }
