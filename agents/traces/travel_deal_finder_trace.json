@@ -1,0 +1,78 @@
+{
+  "agent_id": "travel_deal_finder",
+  "run_id": "run_travel_089",
+  "status": "completed",
+  "started_at": "2026-06-26T14:30:00Z",
+  "completed_at": "2026-06-26T14:30:05Z",
+  "user_request": "Find travel deals to Tokyo under $800",
+  "steps": [
+    {
+      "step": 1,
+      "action": "Receive user request",
+      "details": "Parsed request inputs: destination='Tokyo', budget=800, dates=null"
+    },
+    {
+      "step": 2,
+      "action": "Identify required tools",
+      "details": "Agent manifest requires: web_search, browser"
+    },
+    {
+      "step": 3,
+      "action": "Call mock tool",
+      "tool": "web_search",
+      "input": { "query": "flights to Tokyo round trip under 800 USD 2026" },
+      "output_summary": "Retrieved 3 flight options from aggregate deal sites, lowest starting at $550"
+    },
+    {
+      "step": 4,
+      "action": "Call mock tool",
+      "tool": "web_search",
+      "input": { "query": "cheap accommodation Tokyo hostels hotels under 50 USD night" },
+      "output_summary": "Retrieved 4 budget accommodation options ranging from $35-$60/night"
+    },
+    {
+      "step": 5,
+      "action": "Call mock tool",
+      "tool": "browser",
+      "input": { "url": "https://www.example-travel-deals.com/tokyo-bundle-verify" },
+      "output_summary": "Verified flight + hostel bundle availability and confirmed total price remains under budget"
+    },
+    {
+      "step": 6,
+      "action": "Process tool response",
+      "details": "Compiled flight and hotel options, filtered out combinations exceeding the $800 budget threshold"
+    },
+    {
+      "step": 7,
+      "action": "Generate final answer",
+      "details": "Constructed structured output containing 'deals' array, 'best_value' object, and 'comparison_summary'"
+    },
+    {
+      "step": 8,
+      "action": "Save run history",
+      "details": "Run logged to trace store with run_id run_travel_089"
+    }
+  ],
+  "final_output": {
+    "deals": [
+      {
+        "item_type": "Flight + Hostel Bundle",
+        "provider": "Zipair + Shinjuku Capsule",
+        "price": 730,
+        "description": "Round-trip flight ($550) + 5 nights in a highly-rated capsule hotel ($180)"
+      },
+      {
+        "item_type": "Flight Only",
+        "provider": "All Nippon Airways",
+        "price": 799,
+        "description": "Direct round-trip flight deal. Does not leave room in budget for accommodations."
+      }
+    ],
+    "best_value": {
+      "title": "Zipair & Shinjuku Capsule Bundle",
+      "total_price": 730,
+      "details": "This combination keeps you $70 under your $800 limit while covering both transit and lodging."
+    },
+    "comparison_summary": "Found two valid options. The Flight + Hostel bundle provides the best value overall for $730. While a premium flight on ANA is available for $799, it completely exhausts your budget, leaving $0 for accommodations."
+  }
+}

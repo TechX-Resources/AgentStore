@@ -1,9 +1,9 @@
-import { Routes, Route, Link } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import AgentsPage from './pages/AgentsPage'
-import AgentDetailPage from './pages/AgentDetailPage'
-import ToolsPage from './pages/ToolsPage'
-import './App.css'
+import { Routes, Route, Link } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AgentsPage from "./pages/AgentsPage";
+import AgentDetailPage from "./pages/AgentDetailPage";
+import ToolsPage from "./pages/ToolsPage";
+import "./App.css";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
         <p>AgentStore — TechX Student Project (Skeleton)</p>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

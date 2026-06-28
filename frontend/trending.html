@@ -1,0 +1,34 @@
+<!-- Simple frontend mock to display trending agents -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Trending Agents</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .agent { border: 1px solid #ddd; padding: 10px; margin-bottom: 8px; }
+    .meta { color: #555; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Trending Agents</h1>
+  <div id="list">Loading...</div>
+
+  <script>
+    async function loadTrending() {
+      const res = await fetch('http://localhost:8000/agents/trending?n=10');
+      const agents = await res.json();
+      const list = document.getElementById('list');
+      if (!agents.length) { list.innerText = 'No agents found.'; return; }
+      list.innerHTML = '';
+      agents.forEach(a => {
+        const el = document.createElement('div');
+        el.className = 'agent';
+        el.innerHTML = `<strong>${a.name}</strong> <div class="meta">${a.category} — Installs: ${a.installs} — Rating: ${a.rating.toFixed(1)}</div><p>${a.description}</p>`;
+        list.appendChild(el);
+      });
+    }
+    loadTrending().catch(err=>{ document.getElementById('list').innerText = 'Failed to load.'; console.error(err); });
+  </script>
+</body>
+</html>
