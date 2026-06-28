@@ -37,4 +37,8 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "service": "agentstore-backend",
+        "message": "Backend is running"
+    }

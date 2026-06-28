@@ -1,7 +1,7 @@
 {
   "agent_id": "github_issue_triage",
   "run_id": "run_github_001",
-  "status": "completed",
+  "status": "simulated",
   "started_at": "2026-05-29T10:15:00Z",
   "completed_at": "2026-05-29T10:15:04Z",
   "user_request": "Triage all open issues in techx/agentstore",
@@ -9,34 +9,55 @@
     {
       "step": 1,
       "action": "Receive user request",
-      "details": "Parsed request: triage open issues for repo techx/agentstore"
+      "details": "Parsed request to triage open issues for repo techx/agentstore."
     },
     {
       "step": 2,
       "action": "Identify required tools",
-      "details": "Agent manifest requires: github_reader"
+      "details": "Loaded manifest for github_issue_triage and found required tool: github_reader."
     },
     {
       "step": 3,
       "action": "Call mock tool",
       "tool": "github_reader",
-      "input": { "repo": "techx/agentstore", "state": "open" },
-      "output_summary": "Retrieved 8 open issues"
+      "input": {
+        "repo": "techx/agentstore",
+        "state": "open"
+      },
+      "intermediate_result": {
+        "issues_found": 2,
+        "issues": [
+          {
+            "number": 12,
+            "title": "Frontend card does not show required tools",
+            "body_summary": "Agent marketplace cards are missing tools_required and tags."
+          },
+          {
+            "number": 15,
+            "title": "Health endpoint response is too minimal",
+            "body_summary": "Backend /health route only returns status and should include service info."
+          }
+        ]
+      }
     },
     {
       "step": 4,
-      "action": "Process tool response",
-      "details": "Analyzed issue titles, bodies, and existing labels"
+      "action": "Analyze mock issues",
+      "intermediate_result": [
+        {
+          "issue_number": 12,
+          "reasoning": "Issue affects frontend display, so it should be labeled frontend and bug."
+        },
+        {
+          "issue_number": 15,
+          "reasoning": "Issue affects backend API quality, so it should be labeled backend and enhancement."
+        }
+      ]
     },
     {
       "step": 5,
-      "action": "Generate final answer",
-      "details": "Assigned suggested labels, priority, and assignees for 8 issues"
-    },
-    {
-      "step": 6,
-      "action": "Save run history",
-      "details": "Run logged to trace store with run_id run_github_001"
+      "action": "Generate final output",
+      "details": "Created suggested labels, priority levels, and assignee groups."
     }
   ],
   "final_output": {
