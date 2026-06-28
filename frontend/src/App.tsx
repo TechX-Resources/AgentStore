@@ -10,13 +10,12 @@ function App() {
     <div className="app">
       <header className="app-header">
         <Link to="/" className="logo">
-          <h1>AgentStore</h1>
-          <p className="tagline">The App Store for Agents</p>
+          <h1><span className="harsh-style">/</span>AgentStore</h1>
+          <p className="tagline">Workspace marketplace</p>
         </Link>
         <nav>
-          <Link to="/agents">Agents</Link>
-          <Link to="/tools">Tools</Link>
-          <a href="/trending.html">Trending</a>
+          <Link to="/agents"><span className="harsh-style">#</span>agents</Link>
+          <Link to="/tools"><span className="harsh-style">#</span>tools</Link>
         </nav>
       </header>
       <main>

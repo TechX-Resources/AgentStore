@@ -1,8 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap");
+
 :root {
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
-  color: #1a1a2e;
-  background: #f8f9fc;
+  font-family: 'Fira Code', monospace;
+  line-height: 1.6;
+  
+  /* Color Palette (One Dark + Retro Coder) */
+  --bg-primary: #282C33;
+  --bg-secondary: #21252b;
+  --bg-tertiary: #353b45;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #ABB2BF;
+  --text-muted: #828997;
+  
+  --color-primary: #C778DD;     /* One Dark Purple */
+  --color-secondary: #FF79C6;   /* Pink */
+  --color-accent: #98C379;      /* One Dark Green */
+  --color-warning: #E5C07B;     /* One Dark Yellow */
+  --color-danger: #E06C75;      /* One Dark Red */
+  --color-info: #61AFEF;        /* One Dark Blue */
+  
+  --gradient-primary: linear-gradient(135deg, #C778DD, #FF79C6);
+  --gradient-glow: linear-gradient(135deg, rgba(199, 120, 221, 0.15), rgba(255, 121, 198, 0.15));
+  --gradient-hover: linear-gradient(135deg, #b052c8, #ff4fa8);
+  --gradient-accent: linear-gradient(135deg, #98C379, #61AFEF);
+  
+  /* Retro Coder Variables */
+  --glass-bg: #21252b;
+  --glass-border: #ABB2BF;
+  --glass-shadow: none;
+  --glass-hover-bg: #282C33;
+  --glass-hover-border: #C778DD;
+  
+  /* Fonts */
+  --font-heading: 'Fira Code', monospace;
+  --font-mono: 'Fira Code', monospace;
+  
+  color-scheme: dark;
 }
 
 * {
@@ -12,14 +46,60 @@
 }
 
 body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }
 
 a {
-  color: #4f46e5;
+  color: var(--color-primary);
   text-decoration: none;
+  transition: all 0.2s ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--color-secondary);
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes rotateGrad {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
