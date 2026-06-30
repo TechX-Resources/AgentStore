@@ -33,40 +33,30 @@ export default function AgentCard({ agent }: Props) {
 
   return (
     <article className="agent-card">
-
-      {/* ── Header: name + category badge ── */}
       <div className="agent-card__header">
         <h3 className="agent-card__name">{agent.name}</h3>
         <span className="agent-card__category">{agent.category}</span>
       </div>
 
-      {/* ── Description ── */}
       <p className="agent-card__description">{agent.description}</p>
 
-      {/* ── Tags ── */}
       {agent.tags && agent.tags.length > 0 && (
         <div className="agent-card__tags">
           {agent.tags.map((tag) => (
-            <span key={tag} className="tag">
-              #{tag}
-            </span>
+            <span key={tag} className="tag">#{tag}</span>
           ))}
         </div>
       )}
 
-      {/* ── Tools required ── */}
       {agent.tools_required && agent.tools_required.length > 0 && (
         <div className="agent-card__tools">
           <span className="tools-label">Tools:</span>
           {agent.tools_required.map((tool) => (
-            <span key={tool} className="tool-chip">
-              {tool}
-            </span>
+            <span key={tool} className="tool-chip">{tool}</span>
           ))}
         </div>
       )}
 
-      {/* ── Footer: rating + downloads + CTA ── */}
       <div className="agent-card__footer">
         <div className="agent-card__stats">
           <span className="agent-card__rating" aria-label={`Rating: ${agent.rating.toFixed(1)} out of 5`}>
@@ -85,7 +75,6 @@ export default function AgentCard({ agent }: Props) {
           View Details
         </button>
       </div>
-
     </article>
   )
 }
