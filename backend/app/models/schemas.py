@@ -12,6 +12,7 @@ class AgentSummary(BaseModel):
     description: str
     category: str
     rating: float = 0.0
+    installs: int = 0
     downloads: int = 0
     tags: list[str] = Field(default_factory=list)
     tools_required: list[str] = Field(default_factory=list)
@@ -23,8 +24,8 @@ class AgentDetail(AgentSummary):
     creator: str = "Unknown"
     version: str = "1.0.0"
     status: str = "draft"
-    installs: int = 0
     runs: int = 0
+    installs: int = 0
     permissions_required: list[str] = Field(default_factory=list)
     inputs: dict = Field(default_factory=dict)
     outputs: dict = Field(default_factory=dict)

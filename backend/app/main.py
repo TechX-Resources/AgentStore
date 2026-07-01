@@ -23,6 +23,7 @@ app.include_router(agents.router, prefix="/agents", tags=["agents"])
 app.include_router(tools.router, prefix="/tools", tags=["tools"])
 app.include_router(runs.router, prefix="/agents", tags=["runs"])
 app.include_router(ratings.router, prefix="/agents", tags=["ratings"])
+# trending endpoint moved into agents router
 
 
 @app.get("/")
@@ -37,4 +38,8 @@ def root():
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "ok",
+        "service": "agentstore-backend",
+        "message": "Backend is running"
+    }
