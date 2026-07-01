@@ -30,10 +30,11 @@ def simulate_run(agent_id: str, request: RunRequest):
     result = run_agent(agent_id, request.input)
     trace = get_trace_for_agent(agent_id)
 
+    # Improved response with more detailed status and message based on trace and result
     return RunResponse(
         agent_id=agent_id,
-        status=result.get("status", "simulated"),
-        message=result.get("message", ""),
+        status=result.get("status") or (trace.get("status") if trace else "error"),
+        message=result.get("final_output", result.get("message", "")),
         trace=trace,
         output=trace.get("final_output") if trace else None,
     )
