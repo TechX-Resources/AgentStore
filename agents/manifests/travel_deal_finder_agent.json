@@ -18,7 +18,10 @@
     "properties": {
       "destination": { "type": "string" },
       "dates": { "type": "string" },
-      "budget": { "type": "number" }
+      "budget": { 
+        "type": "number",
+        "description": "Maximum budget limit (in USD)"
+      }
     }
   },
   "outputs": {

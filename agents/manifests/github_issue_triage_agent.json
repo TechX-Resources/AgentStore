@@ -1,7 +1,7 @@
 {
   "id": "github_issue_triage",
   "name": "GitHub Issue Triage Agent",
-  "description": "Analyzes open GitHub issues, suggests labels, priority, and assignees.",
+  "description": "Analyzes GitHub issues, recommends labels, assigns priority levels, suggests assignees, and helps maintainers organize issue backlogs more efficiently.",
   "category": "Developer Tools",
   "creator": "AgentStore Team",
   "version": "1.0.0",
@@ -10,18 +10,35 @@
   "downloads": 980,
   "installs": 720,
   "runs": 3100,
-  "tags": ["github", "developer", "triage", "issues"],
+  "tags": [
+    "github",
+    "developer",
+    "triage",
+    "issues",
+    "automation",
+    "project-management"
+  ],
   "tools_required": ["github_reader"],
   "permissions_required": ["github.read"],
+  "permission_explanation": "Requires read-only access to repository issues. The agent does not create, edit, or delete issues.",
   "inputs": {
     "type": "object",
+    "description": "Parameters used to select which repository issues should be analyzed.",
     "properties": {
-      "repo": { "type": "string", "description": "owner/repo" },
-      "state": { "type": "string", "enum": ["open", "closed", "all"] }
+      "repo": {
+        "type": "string",
+        "description": "Repository in owner/repo format."
+      },
+      "state": {
+        "type": "string",
+        "enum": ["open", "closed", "all"],
+        "description": "Issue state filter."
+      }
     }
   },
   "outputs": {
     "type": "object",
+    "description": "Suggested triage information for each analyzed issue.",
     "properties": {
       "triaged_issues": {
         "type": "array",
@@ -30,16 +47,21 @@
           "properties": {
             "issue_number": { "type": "integer" },
             "suggested_labels": { "type": "array" },
-            "priority": { "type": "string" },
+            "priority": {
+              "type": "string",
+              "description": "Low, Medium, High, or Critical"
+            },
             "suggested_assignee": { "type": "string" }
           }
         }
       }
     }
   },
-  "example_use_case": "Automatically triage new issues in an open-source repo every morning.",
+  "example_use_case": "Automatically triage new issues in an open-source repository every morning.",
   "example_prompts": [
     "Triage all open issues in myorg/myrepo",
-    "Which issues need urgent attention?"
+    "Which issues need urgent attention?",
+    "Suggest labels and priorities for all open bugs.",
+    "Which issues should be assigned to frontend developers?"
   ]
 }

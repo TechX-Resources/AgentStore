@@ -1,7 +1,7 @@
 {
   "id": "study_buddy",
   "name": "Study Buddy Agent",
-  "description": "Creates study plans, flashcards, and practice questions from your notes and topics.",
+  "description": "Turns your notes and topic into a timed study session with a study plan, flashcards, and practice questions.",
   "category": "Education",
   "creator": "AgentStore Team",
   "version": "1.0.0",
@@ -29,7 +29,7 @@
       "practice_questions": { "type": "array" }
     }
   },
-  "example_use_case": "Generate a 30-minute study session on machine learning basics using your class notes.",
+  "example_use_case": "Generate a 30-minute study session on machine learning basics using class notes and quick web references.",
   "example_prompts": [
     "Create a study plan for my calculus exam",
     "Make flashcards from my biology notes"
