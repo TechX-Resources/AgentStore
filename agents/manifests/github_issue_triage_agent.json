@@ -1,67 +1,116 @@
 {
-  "id": "github_issue_triage",
-  "name": "GitHub Issue Triage Agent",
-  "description": "Analyzes GitHub issues, recommends labels, assigns priority levels, suggests assignees, and helps maintainers organize issue backlogs more efficiently.",
-  "category": "Developer Tools",
-  "creator": "AgentStore Team",
-  "version": "1.0.0",
-  "status": "published",
-  "rating": 4.7,
-  "downloads": 980,
-  "installs": 720,
-  "runs": 3100,
-  "tags": [
-    "github",
-    "developer",
-    "triage",
-    "issues",
-    "automation",
-    "project-management"
-  ],
-  "tools_required": ["github_reader"],
-  "permissions_required": ["github.read"],
-  "permission_explanation": "Requires read-only access to repository issues. The agent does not create, edit, or delete issues.",
-  "inputs": {
-    "type": "object",
-    "description": "Parameters used to select which repository issues should be analyzed.",
-    "properties": {
-      "repo": {
-        "type": "string",
-        "description": "Repository in owner/repo format."
-      },
-      "state": {
-        "type": "string",
-        "enum": ["open", "closed", "all"],
-        "description": "Issue state filter."
-      }
-    }
-  },
-  "outputs": {
-    "type": "object",
-    "description": "Suggested triage information for each analyzed issue.",
-    "properties": {
-      "triaged_issues": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "issue_number": { "type": "integer" },
-            "suggested_labels": { "type": "array" },
-            "priority": {
-              "type": "string",
-              "description": "Low, Medium, High, or Critical"
+    "id": "github_issue_triage",
+    "name": "GitHub Issue Triage Agent",
+    "description": "Reads open issues from any GitHub repository and automatically classifies each one by type (bug, enhancement, question, docs), assigns a priority level (high, medium, low), and recommends the best team or individual to assign it to — based on labels, keywords, and past assignee patterns. Saves hours of manual backlog grooming for engineering teams.",
+    "category": "Developer Tools",
+    "creator": "AgentStore Team",
+    "version": "1.0.0",
+    "status": "published",
+    "rating": 4.7,
+    "downloads": 980,
+    "installs": 720,
+    "runs": 3100,
+    "tags": [
+        "github",
+        "developer-tools",
+        "triage",
+        "issues",
+        "backlog",
+        "open-source",
+        "project-management",
+        "automation"
+    ],
+    "tools_required": ["github_reader"],
+    "permissions_required": ["github.read"],
+    "permissions_explanation": {
+        "github.read": "Read-only access to public or private repository issues and labels. The agent never writes to GitHub, creates labels, or modifies any issue — it only reads and classifies."
+    },
+    "inputs": {
+        "type": "object",
+        "required": ["repo"],
+        "properties": {
+            "repo": {
+                "type": "string",
+                "description": "The GitHub repository to triage in owner/repo format. Example: 'microsoft/vscode' or 'myorg/myrepo'."
             },
-            "suggested_assignee": { "type": "string" }
-          }
+            "state": {
+                "type": "string",
+                "enum": ["open", "closed", "all"],
+                "default": "open",
+                "description": "Which issues to fetch. Use 'open' for active backlog triage (recommended), 'closed' for historical review, or 'all' for both."
+            },
+            "max_issues": {
+                "type": "integer",
+                "default": 50,
+                "description": "Maximum number of issues to triage in one run. Increase for large backlogs (up to 200). Defaults to 50."
+            },
+            "label_filter": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Optional list of existing GitHub labels to filter by before triaging. Example: ['needs-triage', 'bug']. Leave empty to triage all issues."
+            }
         }
-      }
-    }
-  },
-  "example_use_case": "Automatically triage new issues in an open-source repository every morning.",
-  "example_prompts": [
-    "Triage all open issues in myorg/myrepo",
-    "Which issues need urgent attention?",
-    "Suggest labels and priorities for all open bugs.",
-    "Which issues should be assigned to frontend developers?"
-  ]
+    },
+    "outputs": {
+        "type": "object",
+        "properties": {
+            "triaged_issues": {
+                "type": "array",
+                "description": "One entry per issue containing the classification results.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "issue_number": {
+                            "type": "integer",
+                            "description": "The GitHub issue number (e.g. #42)."
+                        },
+                        "title": {
+                            "type": "string",
+                            "description": "The original issue title."
+                        },
+                        "issue_type": {
+                            "type": "string",
+                            "enum": ["bug", "enhancement", "question", "docs", "chore", "unknown"],
+                            "description": "Classified issue type based on title, body, and existing labels."
+                        },
+                        "suggested_labels": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "description": "New labels the agent recommends applying. Example: ['bug', 'frontend', 'good-first-issue']."
+                        },
+                        "priority": {
+                            "type": "string",
+                            "enum": ["high", "medium", "low"],
+                            "description": "Suggested fix priority. 'high' = crash/data loss/security. 'medium' = broken feature. 'low' = nice-to-have."
+                        },
+                        "suggested_assignee": {
+                            "type": "string",
+                            "description": "GitHub username recommended for this issue based on past ownership of similar areas. May be empty if no clear match."
+                        },
+                        "reasoning": {
+                            "type": "string",
+                            "description": "One-sentence explanation of why this priority and assignee were suggested."
+                        }
+                    }
+                }
+            },
+            "triage_summary": {
+                "type": "object",
+                "description": "Aggregate stats across all triaged issues.",
+                "properties": {
+                    "total_triaged": { "type": "integer", "description": "Total number of issues processed." },
+                    "high_priority_count": { "type": "integer", "description": "Number of issues classified as high priority." },
+                    "by_type": { "type": "object", "description": "Breakdown of issue count by type. Example: { 'bug': 5, 'enhancement': 3 }." }
+                }
+            }
+        }
+    },
+    "example_use_case": "A maintainer of an open-source repo runs this agent every Monday morning on the previous week's new issues. The agent classifies each issue as bug or enhancement, flags 3 high-priority crashes, and recommends assignees — turning 30 minutes of manual triage into a 10-second review.",
+    "example_prompts": [
+        "Triage all open issues in myorg/myrepo and tell me which are highest priority",
+        "Which open issues in microsoft/vscode are bugs that need urgent attention?",
+        "Classify and assign the 20 newest issues in our repo",
+        "Find all untracked enhancement requests in myorg/backend and suggest labels",
+        "Give me a triage summary for techx/agentstore — how many bugs vs feature requests?"
+    ]
 }
