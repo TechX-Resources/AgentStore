@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { AgentSummary } from '../api/client'
 import './AgentCard.css'
 
@@ -6,47 +6,67 @@ interface Props {
   agent: AgentSummary
 }
 
-/**
- * AgentCard — displays a single agent in the browse grid.
- *
- * TODO: Add install count, trending badge, category chip styling
- * TODO: Add star rating display component
- */
 export default function AgentCard({ agent }: Props) {
+  const navigate = useNavigate()
+
+  const handleViewDetails = (e: React.MouseEvent) => {
+    e.preventDefault()
+    navigate(`/agents/${agent.id}`)
+  }
+
+  const renderStars = (rating: number) => {
+    const filled = Math.round(rating)
+    return Array.from({ length: 5 }, (_, i) => (
+      <span key={i} className={i < filled ? 'star star--filled' : 'star star--empty'}>
+        ★
+      </span>
+    ))
+  }
+
   return (
-    <div className="agent-card">
-      <div className="agent-card-header">
-        <h3>{agent.name}</h3>
-        <span className="category">{agent.category}</span>
+    <article className="agent-card">
+      <div className="agent-card__header">
+        <h3 className="agent-card__name">{agent.name}</h3>
+        <span className="agent-card__category">{agent.category}</span>
       </div>
-      <p className="description">{agent.description}</p>
-      <div className="agent-card-footer">
-        <span className="rating">★ {agent.rating.toFixed(1)}</span>
-        <span className="downloads">
-          {agent.downloads.toLocaleString()} downloads
-        </span>
-      </div>
-      {agent.tools_required.length > 0 && (
-        <div className="tools">
-          {agent.tools_required.map((tool) => (
-            <span key={tool} className="tool-tag">
-              {tool}
-            </span>
-          ))}
-        </div>
-      )}
-      {agent.tags?.length > 0 && (
-        <div className="tools">
+
+      <p className="agent-card__description">{agent.description}</p>
+
+      {agent.tags && agent.tags.length > 0 && (
+        <div className="agent-card__tags">
           {agent.tags.map((tag) => (
-            <span key={tag} className="tool-tag">
-              #{tag}
-            </span>
+            <span key={tag} className="tag">#{tag}</span>
           ))}
         </div>
       )}
-      <Link to={`/agents/${agent.id}`}>
-        <button>View Details</button>
-      </Link>
-    </div>
+
+      {agent.tools_required && agent.tools_required.length > 0 && (
+        <div className="agent-card__tools">
+          <span className="tools-label">Tools:</span>
+          {agent.tools_required.map((tool) => (
+            <span key={tool} className="tool-chip">{tool}</span>
+          ))}
+        </div>
+      )}
+
+      <div className="agent-card__footer">
+        <div className="agent-card__stats">
+          <span className="agent-card__rating" aria-label={`Rating: ${agent.rating.toFixed(1)} out of 5`}>
+            {renderStars(agent.rating)}
+            <span className="rating-value">{agent.rating.toFixed(1)}</span>
+          </span>
+          <span className="agent-card__downloads">
+            ↓ {agent.downloads.toLocaleString()}
+          </span>
+        </div>
+        <button
+          className="agent-card__cta"
+          onClick={handleViewDetails}
+          aria-label={`View details for ${agent.name}`}
+        >
+          View Details
+        </button>
+      </div>
+    </article>
   )
 }
