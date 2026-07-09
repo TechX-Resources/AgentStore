@@ -6,11 +6,6 @@ interface Props {
   agent: AgentSummary
 }
 
-/*
- * Switched from <Link> wrapping to <article> + useNavigate() on the button — this is more accessible.
- * Shows: name, description, category, rating, downloads, tags, tools required.
- * Includes a "View Details" button (does not rely on the whole card being clickable).
- */
 export default function AgentCard({ agent }: Props) {
   const navigate = useNavigate()
 
