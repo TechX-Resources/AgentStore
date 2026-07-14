@@ -1,0 +1,112 @@
+{
+  "run_id": "2357b137",
+  "agent_id": "email_summarizer",
+  "user_input": {},
+  "final_output": {
+    "summary": "Please review the attached budget... | Action items from today's standup... | Please find attached invoice...",
+    "action_items": [
+      "Reply to Alice about budget review",
+      "Follow up on standup action items",
+      "Approve invoice #4821"
+    ],
+    "email_count": 3
+  },
+  "status": "success",
+  "message": "Simulated run for 'email_summarizer' completed.",
+  "trace": {
+    "agent_id": "email_summarizer",
+    "run_id": "2357b137",
+    "status": "completed",
+    "user_request": "{}",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Call mock tool",
+        "tool_id": "gmail_reader",
+        "input": {
+          "query": "is:unread",
+          "max_results": 5
+        },
+        "output": {
+          "messages": [
+            {
+              "id": "msg_001",
+              "from": "alice@example.com",
+              "subject": "Q3 Budget Review",
+              "snippet": "Please review the attached budget...",
+              "date": "2026-05-29T08:30:00Z"
+            },
+            {
+              "id": "msg_002",
+              "from": "bob@corp.com",
+              "subject": "Team standup notes",
+              "snippet": "Action items from today's standup...",
+              "date": "2026-05-29T07:15:00Z"
+            },
+            {
+              "id": "msg_003",
+              "from": "carol@vendor.com",
+              "subject": "Invoice #4821",
+              "snippet": "Please find attached invoice...",
+              "date": "2026-05-28T16:00:00Z"
+            }
+          ],
+          "query": "is:unread"
+        },
+        "status": "success",
+        "latency_ms": 15
+      },
+      {
+        "step": 2,
+        "action": "Call mock tool",
+        "tool_id": "summarize_messages",
+        "input": {
+          "messages": [
+            {
+              "id": "msg_001",
+              "from": "alice@example.com",
+              "subject": "Q3 Budget Review",
+              "snippet": "Please review the attached budget...",
+              "date": "2026-05-29T08:30:00Z"
+            },
+            {
+              "id": "msg_002",
+              "from": "bob@corp.com",
+              "subject": "Team standup notes",
+              "snippet": "Action items from today's standup...",
+              "date": "2026-05-29T07:15:00Z"
+            },
+            {
+              "id": "msg_003",
+              "from": "carol@vendor.com",
+              "subject": "Invoice #4821",
+              "snippet": "Please find attached invoice...",
+              "date": "2026-05-28T16:00:00Z"
+            }
+          ]
+        },
+        "output": {
+          "summary": "Please review the attached budget... | Action items from today's standup... | Please find attached invoice...",
+          "action_items": [
+            "Reply to Alice about budget review",
+            "Follow up on standup action items",
+            "Approve invoice #4821"
+          ],
+          "email_count": 3
+        },
+        "status": "success",
+        "latency_ms": 15
+      }
+    ],
+    "final_output": {
+      "summary": "Please review the attached budget... | Action items from today's standup... | Please find attached invoice...",
+      "action_items": [
+        "Reply to Alice about budget review",
+        "Follow up on standup action items",
+        "Approve invoice #4821"
+      ],
+      "email_count": 3
+    }
+  },
+  "duration_ms": 0
+}

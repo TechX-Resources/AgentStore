@@ -1,0 +1,57 @@
+@startuml AgentStore-Agent-Run-Flow
+!theme plain
+title AgentStore — Simulated Agent Run (Tool-Call Trace)
+caption How an agent execution works under the hood
+
+skinparam shadowing false
+skinparam sequenceArrowThickness 2
+
+actor User
+participant "Frontend" as FE
+participant "Backend API" as API
+participant "Agent Registry" as Reg
+participant "Agent Runner" as Runner
+participant "Tool Registry" as Tools
+participant "Mock Tools" as Mock
+database "Trace Log" as Trace
+
+User -> FE : Click "Run Agent"
+FE -> API : POST /agents/{id}/run\n{ input }
+
+API -> Reg : get_agent(id)
+Reg --> API : agent manifest\n(tools_required, permissions)
+
+API -> Runner : run_agent(id, input)
+
+Runner -> Runner : **Step 1**\nReceive user request
+Runner -> Runner : **Step 2**\nIdentify required tools
+
+loop For each required tool
+  Runner -> Tools : get_tool(tool_id)
+  Tools --> Runner : tool schema +\nmock notes
+  Runner -> Mock : call mock tool
+  Mock --> Runner : canned response\n(from datasets/)
+  Runner -> Runner : **Step 3–4**\nCall tool & process response
+end
+
+Runner -> Runner : **Step 5**\nGenerate final answer
+Runner -> Trace : **Step 6**\nSave run history + trace
+
+Runner --> API : output + trace
+API --> FE : RunResponse
+FE --> User : Result + trace viewer
+
+note over Mock
+  MVP uses mock data only.
+  Real MCP integration
+  replaces this in Phase 4.
+end note
+
+note over Trace
+  Example traces:
+  • Email Summarizer
+  • GitHub Issue Triage
+  • Meeting Notes
+end note
+
+@enduml

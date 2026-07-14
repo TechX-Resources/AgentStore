@@ -1,0 +1,50 @@
+{
+  "run_id": "e09128b7",
+  "agent_id": "budget_analyzer",
+  "user_input": {
+    "query": "Hello, agent!"
+  },
+  "final_output": {
+    "message": "Simulated run for budget_analyzer using static trace."
+  },
+  "status": "success",
+  "message": "Simulated run for 'budget_analyzer' using mock tool-call trace.",
+  "trace": {
+    "agent_id": "budget_analyzer",
+    "run_id": "e09128b7",
+    "status": "completed",
+    "user_request": "Review the Q2 commercial accounts spreadsheet. Identify any rows where the billed amount does not match the contracted rate and flag the billing inquiries.",
+    "steps": [
+      {
+        "step": 1,
+        "action": "tool_call",
+        "tool_id": "spreadsheet",
+        "details": {
+          "spreadsheet_id": "doc_q2_commercial_ledger",
+          "target_column": "Billed_Amount"
+        },
+        "output_summary": {
+          "status": "success",
+          "rows_scanned": 1250,
+          "anomalies_found": 3,
+          "flagged_rows": [
+            142,
+            508,
+            912
+          ]
+        },
+        "status": "success"
+      },
+      {
+        "step": 2,
+        "action": "reasoning",
+        "tool_id": null,
+        "details": "Analyze tool output and format discrepancy report.",
+        "output_summary": "Drafted summary of the 3 flagged billing inquiries requiring human review.",
+        "status": "success"
+      }
+    ],
+    "final_output": null
+  },
+  "duration_ms": 4200
+}

@@ -32,6 +32,7 @@ def list_agents():
             description=a["description"],
             category=a["category"],
             rating=a.get("rating", 0.0),
+            installs=a.get("installs", 0),
             downloads=a.get("downloads", 0),
             tags=a.get("tags", []),
             tools_required=a.get("tools_required", []),

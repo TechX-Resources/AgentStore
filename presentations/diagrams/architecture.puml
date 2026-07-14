@@ -1,0 +1,109 @@
+@startuml AgentStore-Architecture
+!theme plain
+title AgentStore — System Architecture (MVP)
+caption The App Store for Agents | TechX Student Project
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam ArrowColor #4f46e5
+skinparam ComponentBorderColor #1a1a2e
+skinparam PackageBorderColor #6b7280
+
+actor "User\n(Human)" as User
+actor "Student\nDeveloper" as Dev
+
+package "Frontend\n(React + TypeScript + Vite)" as FE #eef2ff {
+  component "Browse Agents" as Browse
+  component "Agent Detail Page" as Detail
+  component "Tool Catalog" as ToolsUI
+  component "Run Simulation UI" as RunUI
+  component "Trace Viewer" as TraceUI
+  component "Ratings & Reviews" as RatingsUI
+}
+
+package "Backend API\n(FastAPI + Pydantic)" as BE #f0fdf4 {
+  component "Agents API" as AgentsAPI
+  component "Tools API" as ToolsAPI
+  component "Run API" as RunAPI
+  component "Ratings API" as RatingsAPI
+}
+
+package "Agent Layer\n(LLM Cohort)" as AgentLayer #fef3c7 {
+  component "Agent Registry" as AgentReg
+  component "Tool Registry" as ToolReg
+  component "Agent Runner\n(MCP Simulation)" as Runner
+  component "Prompt Templates" as Prompts
+  component "Tool-Call Traces" as Traces
+}
+
+package "Marketplace Catalog" as Catalog #f3f4f6 {
+  database "Agent Manifests\n(JSON)" as AgentManifests
+  database "Tool Manifests\n(JSON)" as ToolManifests
+  database "Runtime Storage\n(JSON)" as Runtime
+}
+
+package "Data Science Layer\n(Data Science Cohort)" as DS #fce7f3 {
+  component "Trending Algorithm" as Trending
+  component "Rating Aggregator" as RatingAgg
+  component "Review Sentiment" as Sentiment
+  component "Quality Score" as Quality
+}
+
+database "Mock Datasets\n(CSV / JSON)" as Datasets
+
+cloud "Future: Real MCP\n& External APIs" as Future #e5e7eb
+
+User --> Browse
+User --> Detail
+User --> RunUI
+User --> RatingsUI
+
+Dev --> AgentManifests : publish\nmanifests
+Dev --> ToolManifests
+Dev --> DS : analytics\nscripts
+
+Browse --> AgentsAPI : GET /agents
+Detail --> AgentsAPI : GET /agents/{id}
+ToolsUI --> ToolsAPI : GET /tools
+RunUI --> RunAPI : POST /agents/{id}/run
+TraceUI --> RunAPI : GET /agents/{id}/traces
+RatingsUI --> RatingsAPI
+
+AgentsAPI --> AgentReg
+ToolsAPI --> ToolReg
+RunAPI --> Runner
+RatingsAPI --> Runtime
+
+AgentReg --> AgentManifests
+ToolReg --> ToolManifests
+Runner --> ToolReg
+Runner --> Prompts
+Runner --> Traces
+Runner ..> Future : Phase 4\n(real tools)
+
+Trending --> Datasets
+RatingAgg --> Datasets
+Sentiment --> Datasets
+Quality --> Datasets
+Trending ..> AgentsAPI : trending\nscores (future)
+
+note right of FE
+  **Full Stack cohort**
+  Pages, components,
+  API integration
+end note
+
+note right of AgentLayer
+  **LLM cohort**
+  Manifests, runner,
+  traces, prompts
+end note
+
+note right of DS
+  **Data Science cohort**
+  Ranking, analytics,
+  recommendations
+end note
+
+@enduml

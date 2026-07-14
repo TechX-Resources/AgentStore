@@ -1,0 +1,52 @@
+<!-- Public fallback page. Prefer the React route /trending in the app. -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Trending Agents</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .agent { border: 1px solid #ddd; padding: 10px; margin-bottom: 8px; }
+    .meta { color: #555; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Trending Agents</h1>
+  <p><a href="/">Back to AgentStore</a></p>
+  <div id="list">Loading...</div>
+
+  <script>
+    async function loadTrending() {
+      // Prefer Vite proxy so this works with the same-origin frontend.
+      const endpoints = ['/api/agents/trending?n=10', 'http://127.0.0.1:8000/agents/trending?n=10'];
+      let agents = null;
+      let lastError = null;
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error(`${url} → ${res.status}`);
+          agents = await res.json();
+          break;
+        } catch (err) {
+          lastError = err;
+        }
+      }
+      const list = document.getElementById('list');
+      if (!agents) {
+        list.innerText = 'Failed to load. Start the backend on port 8000.';
+        console.error(lastError);
+        return;
+      }
+      if (!agents.length) { list.innerText = 'No agents found.'; return; }
+      list.innerHTML = '';
+      agents.forEach(a => {
+        const el = document.createElement('div');
+        el.className = 'agent';
+        el.innerHTML = `<strong>${a.name}</strong> <div class="meta">${a.category} — Installs: ${a.installs ?? a.downloads ?? 0} — Rating: ${Number(a.rating || 0).toFixed(1)}</div><p>${a.description || ''}</p>`;
+        list.appendChild(el);
+      });
+    }
+    loadTrending();
+  </script>
+</body>
+</html>

@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "agent_id": "email_summarizer",
+    "score": 5.0,
+    "review": "works"
+  },
+  {
+    "agent_id": "budget_analyzer",
+    "score": 5.0,
+    "review": "Good agent"
+  }
+]

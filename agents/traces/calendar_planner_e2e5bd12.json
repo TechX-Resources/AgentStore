@@ -1,0 +1,49 @@
+{
+  "run_id": "e2e5bd12",
+  "agent_id": "calendar_planner",
+  "user_input": {},
+  "final_output": {
+    "message": "Simulated run for 'calendar_planner'. Add a static trace or tool chain for richer output.",
+    "input": {}
+  },
+  "status": "success",
+  "message": "Simulated run for 'calendar_planner'.",
+  "trace": {
+    "agent_id": "calendar_planner",
+    "run_id": "e2e5bd12",
+    "status": "completed",
+    "user_request": "{}",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Receive user request",
+        "details": "{}"
+      },
+      {
+        "step": 2,
+        "action": "Identify required tools",
+        "details": "Loaded from agent manifest"
+      },
+      {
+        "step": 3,
+        "action": "Call mock tool",
+        "details": "Mock execution (no live APIs)"
+      },
+      {
+        "step": 4,
+        "action": "Generate final answer",
+        "details": "Placeholder result for calendar_planner"
+      },
+      {
+        "step": 5,
+        "action": "Save run history",
+        "details": "run_id=e2e5bd12"
+      }
+    ],
+    "final_output": {
+      "message": "Simulated run for 'calendar_planner'. Add a static trace or tool chain for richer output.",
+      "input": {}
+    }
+  },
+  "duration_ms": 25
+}

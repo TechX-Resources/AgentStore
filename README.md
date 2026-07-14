@@ -2,15 +2,9 @@
 
 **The App Store for Agents.**
 
-AgentStore is a student-built marketplace where AI agents can be discovered, built, shared, purchased, installed, remixed, and improved by both humans and other agents.
-Emmanuel Akwasi Opoku
-Vu Chau
-Justin Wang
-Jeremy
+AgentStore is a student-built marketplace where AI agents can be discovered, built, shared, installed, remixed, and improved by both humans and other agents.
 
-## Cohorts!
-
-This project is designed for two TechX cohorts:
+## Cohorts
 
 | Cohort | Focus Areas |
 |--------|-------------|
@@ -20,40 +14,50 @@ This project is designed for two TechX cohorts:
 ## Architecture
 
 ```
-Frontend (React + Vite)
-        ↓
+Frontend (React + TypeScript + Vite)
+        ↓  /api proxy
 Backend API (FastAPI)
         ↓
-Agent Registry → Tool Registry → Agent Store Catalog
+Agent Registry → Tool Registry → Catalog
         ↓
-Agent Runner / MCP Simulation
+Agent Runner / MCP Simulation (mock tools)
         ↓
-Tool-Call Trace Logs → Ratings, Reviews, Analytics
+Tool-Call Traces → Ratings / Reviews → Analytics
 ```
 
 See [docs/architecture.md](docs/architecture.md) for details.
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
+- **Node.js 18+**
+- **Python 3.11+** (3.13 works)
+- **Git**
 
-- Node.js 18+
-- Python 3.11+
-- Git
+## Run locally (two terminals)
 
-### Backend (placeholder)
+### 1. Backend API
 
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+
+# Windows (PowerShell)
+.\venv\Scripts\Activate.ps1
+
+# macOS / Linux
+# source venv/bin/activate
+
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-API docs: http://127.0.0.1:8000/docs
+- API root: http://127.0.0.1:8000  
+- Interactive docs: http://127.0.0.1:8000/docs  
+- Health: http://127.0.0.1:8000/health  
 
-### Frontend (placeholder)
+### 2. Frontend (Vite)
+
+In a **second** terminal:
 
 ```bash
 cd frontend
@@ -61,20 +65,53 @@ npm install
 npm run dev
 ```
 
-App: http://localhost:5173
+Open: **http://127.0.0.1:5173**
 
-### Data Science
+The frontend calls the backend through the Vite proxy path `/api` (see `frontend/vite.config.ts`). Keep the backend running while using the UI.
+
+### Optional: direct API URL
+
+Create `frontend/.env.local` only if you need to bypass the proxy:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:8000
+```
+
+### Data Science (optional)
 
 ```bash
 cd data-science
 pip install -r requirements.txt
-# TODO: Run analytics scripts or open notebooks
+python analytics/trending_agents.py
 ```
+
+### Tests (optional)
+
+```bash
+cd backend
+.\venv\Scripts\Activate.ps1   # or source venv/bin/activate
+pip install -r ../tests/requirements.txt
+cd ..
+pytest tests/ -q
+```
+
+## What works in the MVP UI
+
+| Feature | Route / Endpoint |
+|---------|------------------|
+| Browse agents | `/agents` → `GET /agents` |
+| Agent detail | `/agents/:id` → `GET /agents/{id}` |
+| Simulated run + trace | **Run Agent** → `POST /agents/{id}/run` |
+| Rate / review | Agent detail form → `POST /agents/{id}/ratings` |
+| Browse tools | `/tools` → `GET /tools` |
+| Trending | `/trending` → `GET /agents/trending` |
+
+Agent and tool data come from JSON manifests under `agents/manifests/` and `tools/manifests/`. Runs use **mock tools** only (no real Gmail/GitHub/MCP).
 
 ## Repository Structure
 
 ```
-├── docs/           # Product documents, architecture, user stories
+├── docs/           # Product docs, architecture, user stories
 ├── frontend/       # React + TypeScript + Vite UI
 ├── backend/        # FastAPI REST API
 ├── agents/         # Agent manifests, registry, runner, traces
@@ -90,7 +127,7 @@ pip install -r requirements.txt
 
 ## Contributing
 
-Students implement features through assigned Kanban tickets using branches and pull requests.
+Students implement features through Kanban tickets using branches and pull requests.
 
 ### Branch Naming
 
@@ -100,37 +137,24 @@ fix/<ticket-id>-short-description
 docs/<ticket-id>-short-description
 ```
 
-Examples:
-- `feature/AS-12-agent-detail-page`
-- `fix/AS-34-rating-endpoint`
-- `docs/AS-01-update-architecture`
-
 ### Pull Request Expectations
 
-1. One ticket per PR when possible
-2. Include a clear description of what changed and why
-3. Reference the Kanban ticket ID
-4. Keep changes focused — no unrelated refactors
-5. Update relevant README or docs if behavior changes
-6. Add or update tests when implementing logic
+1. One ticket per PR when possible  
+2. Clear description + ticket ID  
+3. No secrets / API keys  
+4. Keep scope focused  
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [STUDENT_ONBOARDING.md](STUDENT_ONBOARDING.md) for more.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [STUDENT_ONBOARDING.md](STUDENT_ONBOARDING.md).
 
 ## Documentation
 
-- [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) — Product vision and concepts
-- [STUDENT_ONBOARDING.md](STUDENT_ONBOARDING.md) — Getting started as a student developer
-- [ROADMAP.md](ROADMAP.md) — Planned milestones
-- [docs/product-requirements.md](docs/product-requirements.md) — MVP scope
-- [docs/user-stories.md](docs/user-stories.md) — User stories
-- [docs/architecture.md](docs/architecture.md) — System architecture
-
-# AgentStore
-
-This repository contains AI agents and tools.
+- [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md) — Product vision  
+- [STUDENT_ONBOARDING.md](STUDENT_ONBOARDING.md) — Student setup  
+- [ROADMAP.md](ROADMAP.md) — Planned milestones  
+- [docs/product-requirements.md](docs/product-requirements.md) — MVP scope  
+- [docs/user-stories.md](docs/user-stories.md) — User stories  
+- [docs/architecture.md](docs/architecture.md) — System architecture  
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-

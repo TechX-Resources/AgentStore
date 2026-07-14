@@ -1,0 +1,49 @@
+@startuml AgentStore-Cohort-Workstreams
+!theme plain
+title AgentStore — Student Cohort Workstreams
+caption How two TechX cohorts contribute to one marketplace
+
+skinparam shadowing false
+skinparam rectangleBorderColor #1a1a2e
+
+rectangle "AgentStore MVP" as MVP #f8f9fc {
+
+  rectangle "LLM Cohort" as LLM #fef3c7 {
+    card "Agent manifests" as M1
+    card "Tool manifests" as M2
+    card "Prompt templates" as M3
+    card "Agent runner" as M4
+    card "Tool-call traces" as M5
+    card "MCP simulation" as M6
+  }
+
+  rectangle "Data Science Cohort" as DS #fce7f3 {
+    card "Trending algorithm" as D1
+    card "Rating aggregation" as D2
+    card "Review sentiment" as D3
+    card "Quality scoring" as D4
+    card "Usage analytics" as D5
+    card "Recommendations" as D6
+  }
+
+  rectangle "Full Stack\n(both cohorts)" as FS #eef2ff {
+    card "Frontend UI" as F1
+    card "Backend API" as F2
+    card "JSON storage" as F3
+    card "Tests" as F4
+  }
+}
+
+LLM --> FS : manifests &\nrunner logic
+DS --> FS : scores &\ntrending data
+FS --> MVP : integrated\ndemo
+
+note as KanbanNote
+  All work flows through
+  **Kanban tickets** → branches → PRs
+  Ticket prefix: **AS-XX**
+end note
+
+KanbanNote .. MVP
+
+@enduml

@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import AgentsPage from "./pages/AgentsPage";
 import AgentDetailPage from "./pages/AgentDetailPage";
 import ToolsPage from "./pages/ToolsPage";
+import TrendingPage from "./pages/TrendingPage";
 import "./App.css";
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         <nav>
           <Link to="/agents">Agents</Link>
           <Link to="/tools">Tools</Link>
-          <a href="/trending.html">Trending</a>
+          <Link to="/trending">Trending</Link>
         </nav>
       </header>
       <main>
@@ -25,6 +26,7 @@ function App() {
           <Route path="/agents" element={<AgentsPage />} />
           <Route path="/agents/:id" element={<AgentDetailPage />} />
           <Route path="/tools" element={<ToolsPage />} />
+          <Route path="/trending" element={<TrendingPage />} />
         </Routes>
       </main>
       <footer>

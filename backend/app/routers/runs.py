@@ -17,36 +17,31 @@ router = APIRouter()
 
 @router.post("/{agent_id}/run", response_model=RunResponse)
 def simulate_run(agent_id: str, request: RunRequest):
-    """Simulate running an agent.
-
-    TODO: Implement full mock execution via agent_runner
-    TODO: Record run in storage
-    TODO: Return complete trace
-    """
+    """Simulate running an agent and return the live result + trace."""
     agent = get_agent_by_id(agent_id)
     if not agent:
         raise HTTPException(status_code=404, detail=f"Agent '{agent_id}' not found")
 
-    result = run_agent(agent_id, request.input)
-    trace = get_trace_for_agent(agent_id)
+    result = run_agent(agent_id, request.input or {})
+    live_trace = result.get("trace") or get_trace_for_agent(agent_id)
 
-    # Improved response with more detailed status and message based on trace and result
     return RunResponse(
         agent_id=agent_id,
-        status=result.get("status") or (trace.get("status") if trace else "error"),
-        message=result.get("final_output", result.get("message", "")),
-        trace=trace,
-        output=trace.get("final_output") if trace else None,
+        status=result.get("status", "error"),
+        message=result.get("message")
+        or (
+            result.get("final_output")
+            if isinstance(result.get("final_output"), str)
+            else "Run completed"
+        ),
+        trace=live_trace,
+        output=result.get("final_output"),
     )
 
 
 @router.get("/{agent_id}/traces")
 def get_traces(agent_id: str):
-    """Get tool-call traces for an agent.
-
-    TODO: Support listing multiple traces by run_id
-    TODO: Load traces from storage for dynamically generated runs
-    """
+    """Get tool-call traces for an agent (dynamic run or static example)."""
     agent = get_agent_by_id(agent_id)
     if not agent:
         raise HTTPException(status_code=404, detail=f"Agent '{agent_id}' not found")

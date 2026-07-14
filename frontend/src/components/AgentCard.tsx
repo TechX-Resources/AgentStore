@@ -51,12 +51,12 @@ export default function AgentCard({ agent }: Props) {
 
       <div className="agent-card__footer">
         <div className="agent-card__stats">
-          <span className="agent-card__rating" aria-label={`Rating: ${agent.rating.toFixed(1)} out of 5`}>
-            {renderStars(agent.rating)}
-            <span className="rating-value">{agent.rating.toFixed(1)}</span>
+          <span className="agent-card__rating" aria-label={`Rating: ${(agent.rating ?? 0).toFixed(1)} out of 5`}>
+            {renderStars(agent.rating ?? 0)}
+            <span className="rating-value">{(agent.rating ?? 0).toFixed(1)}</span>
           </span>
           <span className="agent-card__downloads">
-            ↓ {agent.downloads.toLocaleString()}
+            ↓ {(agent.downloads ?? 0).toLocaleString()}
           </span>
         </div>
         <button

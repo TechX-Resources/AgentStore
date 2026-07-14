@@ -93,9 +93,10 @@ def liveness():
 
 @router.get("/ready")
 def readiness():
-    """Readiness probe — Checks agents registry and storage. Returns 200 only when both pass.
-    Used by load balancers to decide whether to route traffic to this instance."""
-    agents_check  = _check_agents()
+    """Readiness probe — 200 when ready, 503 when dependencies are unavailable."""
+    from fastapi.responses import JSONResponse
+
+    agents_check = _check_agents()
     storage_check = _check_storage()
 
     ready = (
@@ -103,10 +104,11 @@ def readiness():
         and storage_check.get("status") == "ok"
     )
 
-    return {
+    body = {
         "status": "ready" if ready else "not_ready",
         "checks": {
-            "agents":  agents_check,
+            "agents": agents_check,
             "storage": storage_check,
         },
     }
+    return JSONResponse(content=body, status_code=200 if ready else 503)

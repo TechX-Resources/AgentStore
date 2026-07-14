@@ -1,0 +1,51 @@
+{
+  "run_id": "c20ad26f",
+  "agent_id": "email_summarizer",
+  "user_input": {},
+  "final_output": "Summarized 3 emails: Please review the attached budget... | Action items from today's standup... | Please find attached invoice...",
+  "status": "success",
+  "trace": [
+    {
+      "step": 1,
+      "tool_id": "fetch_emails",
+      "input": {
+        "limit": 5
+      },
+      "output": {
+        "emails": [
+          {
+            "from": "alice@example.com",
+            "subject": "Q3 Budget Review",
+            "snippet": "Please review the attached budget..."
+          },
+          {
+            "from": "bob@corp.com",
+            "subject": "Team standup notes",
+            "snippet": "Action items from today's standup..."
+          },
+          {
+            "from": "carol@vendor.com",
+            "subject": "Invoice #4821",
+            "snippet": "Please find attached invoice..."
+          }
+        ]
+      },
+      "status": "success",
+      "latency_ms": 15
+    },
+    {
+      "step": 2,
+      "tool_id": "summarize_text",
+      "input": {
+        "text": "Please review the attached budget... | Action items from today's standup... | Please find attached invoice..."
+      },
+      "output": {
+        "summary": "Please review the attached budget... | Action items from today's standup... | Please find attached invoice...",
+        "word_count": 16
+      },
+      "status": "success",
+      "latency_ms": 15
+    }
+  ],
+  "duration_ms": 0
+}

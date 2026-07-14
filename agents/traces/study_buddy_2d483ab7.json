@@ -1,0 +1,170 @@
+{
+  "run_id": "2d483ab7",
+  "agent_id": "study_buddy",
+  "user_input": {},
+  "final_output": {
+    "study_plan": [
+      {
+        "segment": "Review key concepts",
+        "duration_minutes": 10,
+        "focus": [
+          "supervised learning",
+          "features and labels",
+          "overfitting"
+        ]
+      },
+      {
+        "segment": "Active recall",
+        "duration_minutes": 10,
+        "focus": [
+          "explain evaluation metrics",
+          "compare training vs validation data"
+        ]
+      },
+      {
+        "segment": "Practice questions",
+        "duration_minutes": 10,
+        "focus": [
+          "apply concepts to a simple dataset",
+          "identify common mistakes"
+        ]
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What is the difference between a feature and a label?",
+        "back": "A feature is an input variable used for prediction; a label is the target value being predicted."
+      },
+      {
+        "front": "What does overfitting mean?",
+        "back": "Overfitting happens when a model learns training data too closely and performs poorly on new data."
+      },
+      {
+        "front": "Why do we use a validation set?",
+        "back": "A validation set helps estimate model performance during development without using the test set."
+      }
+    ],
+    "practice_questions": [
+      "Explain why a model with very high training accuracy might still perform poorly on test data.",
+      "Given a small dataset, how would you decide whether the model is overfitting?",
+      "Name two evaluation metrics you would use for a classification task and describe when each is useful."
+    ],
+    "session_summary": "Completed a 30-minute beginner study session on machine learning basics using class notes and quick reference material."
+  },
+  "status": "success",
+  "message": "Simulated run for 'study_buddy' using mock tool-call trace.",
+  "trace": {
+    "agent_id": "study_buddy",
+    "run_id": "2d483ab7",
+    "status": "completed",
+    "user_request": "Create a 30-minute study session on machine learning basics using my class notes.",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Receive user request",
+        "tool_id": null,
+        "details": "Parsed request: build a 30-minute study session for machine learning basics using provided notes",
+        "output_summary": null,
+        "status": "success"
+      },
+      {
+        "step": 2,
+        "action": "Identify required tools",
+        "tool_id": null,
+        "details": "Agent manifest requires: notes, web_search",
+        "output_summary": null,
+        "status": "success"
+      },
+      {
+        "step": 3,
+        "action": "Call mock tool",
+        "tool_id": "notes",
+        "details": null,
+        "output_summary": "Retrieved 2 class notes covering supervised learning, overfitting, and evaluation metrics",
+        "status": "success"
+      },
+      {
+        "step": 4,
+        "action": "Call mock tool",
+        "tool_id": "web_search",
+        "details": null,
+        "output_summary": "Found 3 reference snippets for beginner-friendly examples and terminology",
+        "status": "success"
+      },
+      {
+        "step": 5,
+        "action": "Process tool response",
+        "tool_id": null,
+        "details": "Grouped note content into review, practice, and recall segments; selected key terms for flashcards",
+        "output_summary": null,
+        "status": "success"
+      },
+      {
+        "step": 6,
+        "action": "Generate final answer",
+        "tool_id": null,
+        "details": "Produced a timed study plan with flashcards and practice questions aligned to the requested duration",
+        "output_summary": null,
+        "status": "success"
+      },
+      {
+        "step": 7,
+        "action": "Save run history",
+        "tool_id": null,
+        "details": "Run logged to trace store with run_id run_study_001",
+        "output_summary": null,
+        "status": "success"
+      }
+    ],
+    "final_output": {
+      "study_plan": [
+        {
+          "segment": "Review key concepts",
+          "duration_minutes": 10,
+          "focus": [
+            "supervised learning",
+            "features and labels",
+            "overfitting"
+          ]
+        },
+        {
+          "segment": "Active recall",
+          "duration_minutes": 10,
+          "focus": [
+            "explain evaluation metrics",
+            "compare training vs validation data"
+          ]
+        },
+        {
+          "segment": "Practice questions",
+          "duration_minutes": 10,
+          "focus": [
+            "apply concepts to a simple dataset",
+            "identify common mistakes"
+          ]
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is the difference between a feature and a label?",
+          "back": "A feature is an input variable used for prediction; a label is the target value being predicted."
+        },
+        {
+          "front": "What does overfitting mean?",
+          "back": "Overfitting happens when a model learns training data too closely and performs poorly on new data."
+        },
+        {
+          "front": "Why do we use a validation set?",
+          "back": "A validation set helps estimate model performance during development without using the test set."
+        }
+      ],
+      "practice_questions": [
+        "Explain why a model with very high training accuracy might still perform poorly on test data.",
+        "Given a small dataset, how would you decide whether the model is overfitting?",
+        "Name two evaluation metrics you would use for a classification task and describe when each is useful."
+      ],
+      "session_summary": "Completed a 30-minute beginner study session on machine learning basics using class notes and quick reference material."
+    }
+  },
+  "duration_ms": 1000
+}

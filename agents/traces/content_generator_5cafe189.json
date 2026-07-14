@@ -1,0 +1,49 @@
+{
+  "run_id": "5cafe189",
+  "agent_id": "content_generator",
+  "user_input": {},
+  "final_output": {
+    "message": "Simulated run for 'content_generator'. Add a static trace or tool chain for richer output.",
+    "input": {}
+  },
+  "status": "success",
+  "message": "Simulated run for 'content_generator'.",
+  "trace": {
+    "agent_id": "content_generator",
+    "run_id": "5cafe189",
+    "status": "completed",
+    "user_request": "{}",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Receive user request",
+        "details": "{}"
+      },
+      {
+        "step": 2,
+        "action": "Identify required tools",
+        "details": "Loaded from agent manifest"
+      },
+      {
+        "step": 3,
+        "action": "Call mock tool",
+        "details": "Mock execution (no live APIs)"
+      },
+      {
+        "step": 4,
+        "action": "Generate final answer",
+        "details": "Placeholder result for content_generator"
+      },
+      {
+        "step": 5,
+        "action": "Save run history",
+        "details": "run_id=5cafe189"
+      }
+    ],
+    "final_output": {
+      "message": "Simulated run for 'content_generator'. Add a static trace or tool chain for richer output.",
+      "input": {}
+    }
+  },
+  "duration_ms": 25
+}

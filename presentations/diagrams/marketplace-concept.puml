@@ -1,0 +1,61 @@
+@startuml AgentStore-Marketplace-Concept
+!theme plain
+title AgentStore — Marketplace Concept
+caption Three entity types in the agent economy
+
+skinparam shadowing false
+skinparam classBackgroundColor #ffffff
+skinparam classBorderColor #4f46e5
+
+together {
+  class "Agents" as Agents #eef2ff {
+    AI workers that perform tasks
+    --
+    Email Summarizer
+    GitHub Issue Triage
+    Meeting Notes Agent
+    Resume Reviewer
+    + 6 more starter agents
+  }
+
+  class "Tools" as Tools #f0fdf4 {
+    Capabilities agents can use
+    --
+    Gmail Reader
+    Calendar Reader
+    GitHub Reader
+    Web Search
+    File Reader
+    + 3 more tools
+  }
+
+  class "Agent Apps" as Apps #fef3c7 {
+    Bundles (future)
+    --
+    Agents + Tools
+    Workflows
+    Prompts
+    Configurations
+  }
+}
+
+Agents --> Tools : uses
+Apps *-- Agents : bundles
+Apps *-- Tools : bundles
+
+note bottom of Agents
+  10 starter manifests
+  in agents/manifests/
+end note
+
+note bottom of Tools
+  8 tool manifests
+  in tools/manifests/
+end note
+
+note bottom of Apps
+  Phase 3 extension
+  Installable packages
+end note
+
+@enduml

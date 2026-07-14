@@ -1,0 +1,88 @@
+@startuml AgentStore-User-Journey
+!theme plain
+title AgentStore — MVP User Journey
+caption End-to-end flow for session demo
+
+skinparam shadowing false
+skinparam ActivityBackgroundColor #eef2ff
+skinparam ActivityBorderColor #4f46e5
+skinparam ArrowColor #1a1a2e
+
+|User|
+start
+:Open AgentStore;
+
+|Frontend|
+:Display Home Page;
+
+|User|
+:Browse Agents;
+
+|Frontend|
+:Fetch agent list\nGET /agents;
+
+|Backend|
+:Load manifests\nfrom Agent Registry;
+:Return agent cards\n(name, category, rating, tools);
+
+|Frontend|
+:Render Agent Cards;
+
+|User|
+:Select an agent\n(e.g. Email Summarizer);
+
+|Frontend|
+:Fetch agent details\nGET /agents/{id};
+
+|Backend|
+:Return full manifest\n(tools, permissions,\nexample prompts);
+
+|Frontend|
+:Show Agent Detail Page;
+
+|User|
+:Inspect tools & permissions;
+:Click **Run Agent**;
+
+|Frontend|
+:POST /agents/{id}/run;
+
+|Backend|
+:Load agent manifest;
+:Agent Runner identifies\nrequired tools;
+
+|Agent Runner|
+:Execute mock tool calls\n(no real APIs);
+:Record tool-call trace steps;
+:Generate final output;
+
+|Backend|
+:Return result + trace;
+
+|Frontend|
+:Display output;
+:Show Tool-Call Trace Viewer;
+
+|User|
+:Review trace steps\n(understand workflow);
+:Submit rating & review;
+
+|Frontend|
+:POST /agents/{id}/ratings;
+
+|Backend|
+:Save to JSON storage;
+
+|Data Science|
+:Analyze usage & reviews\n(trending, quality score);
+
+|Frontend|
+:Show updated ratings;\nShow trending agents;
+
+|User|
+:Optional — Remix / Fork agent\n(future ticket);
+:Optional — Publish new agent\n(future ticket);
+
+stop
+
+@enduml
