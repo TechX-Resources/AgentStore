@@ -10,7 +10,7 @@ export interface AgentSummary {
   name: string
   description: string
   category: string
-  rating: number
+  rating: number | null
   downloads: number
   installs?: number
   tags: string[]

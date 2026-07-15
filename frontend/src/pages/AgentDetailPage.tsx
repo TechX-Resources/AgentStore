@@ -59,6 +59,8 @@ export default function AgentDetailPage() {
       setRatings((prev) => [...prev, saved])
       setReview('')
       setRatingMsg('Thanks — rating submitted.')
+      const refreshed = await fetchAgent(id)
+      setAgent(refreshed as unknown as Record<string, unknown>)
     } catch (err) {
       setRatingMsg(err instanceof Error ? err.message : 'Could not submit rating')
     }
@@ -116,7 +118,7 @@ export default function AgentDetailPage() {
             <strong>Category:</strong> {String(agent.category)}
           </li>
           <li>
-            <strong>Rating:</strong> ★ {Number(agent.rating ?? 0).toFixed(1)}
+            <strong>Rating:</strong>{' '}{agent.rating != null ? `★ ${Number(agent.rating).toFixed(1)}` : 'No ratings yet'}
           </li>
           <li>
             <strong>Tools:</strong>{' '}

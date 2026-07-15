@@ -8,5 +8,10 @@
     "agent_id": "budget_analyzer",
     "score": 5.0,
     "review": "Good agent"
+  },
+  {
+    "agent_id": "budget_analyzer",
+    "score": 3.0,
+    "review": "Alright"
   }
 ]
