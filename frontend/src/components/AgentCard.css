@@ -140,6 +140,12 @@
     margin-left: 0.2rem;
 }
 
+.review-count {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-left: 0.25rem;
+}
+
 .agent-card__downloads {
     font-size: 0.8rem;
     color: #9ca3af;

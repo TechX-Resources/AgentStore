@@ -11,6 +11,7 @@ export interface AgentSummary {
   description: string
   category: string
   rating: number | null
+  review_count: number
   downloads: number
   installs?: number
   tags: string[]

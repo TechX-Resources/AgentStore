@@ -55,6 +55,9 @@ export default function AgentCard({ agent }: Props) {
             <span className="agent-card__rating" aria-label={`Rating: ${agent.rating.toFixed(1)} out of 5`}>
               {renderStars(agent.rating)}
               <span className="rating-value">{agent.rating.toFixed(1)}</span>
+              <span className="review-count">
+                ({(agent.review_count ?? 0).toLocaleString()})
+                </span>
             </span>
           ) : (
             <span className="agent-card__rating agent-card__rating--empty">No ratings yet</span>
