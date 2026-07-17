@@ -11,7 +11,7 @@ class AgentSummary(BaseModel):
     name: str
     description: str
     category: str
-    rating: float = 0.0
+    rating: Optional[float] = None
     installs: int = 0
     downloads: int = 0
     tags: list[str] = Field(default_factory=list)
