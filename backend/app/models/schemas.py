@@ -16,6 +16,7 @@ class AgentSummary(BaseModel):
     downloads: int = 0
     tags: list[str] = Field(default_factory=list)
     tools_required: list[str] = Field(default_factory=list)
+    review_count: int = 0
 
 
 class AgentDetail(AgentSummary):

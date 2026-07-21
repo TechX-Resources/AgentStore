@@ -24,7 +24,7 @@ def list_agents():
     agents = load_all_agents()
     result = []
     for a in agents:
-        live_rating, _count = get_rating_stats(a["id"])
+        live_rating, review_count = get_rating_stats(a["id"])
         result.append(
             AgentSummary(
                 id=a["id"],
@@ -32,6 +32,7 @@ def list_agents():
                 description=a["description"],
                 category=a["category"],
                 rating=live_rating,
+                review_count=review_count,
                 installs=a.get("installs", 0),
                 downloads=a.get("downloads", 0),
                 tags=a.get("tags", []),
@@ -54,13 +55,14 @@ def trending(n: int = Query(10, ge=1, le=50)):
                 continue
 
             agent_id = data.get("id") or (data.get("name", "").lower().replace(" ", "_"))
-            live_rating, _count = get_rating_stats(agent_id)
+            live_rating, live_count = get_rating_stats(agent_id)
             agent = {
                 "id": agent_id,
                 "name": data.get("name", "Unnamed Agent"),
                 "description": data.get("description", ""),
                 "category": data.get("category", "uncategorized"),
                 "rating": live_rating,
+                "review_count": live_count,
                 "installs": int(data.get("installs") or data.get("downloads") or 0),
                 "downloads": int(data.get("downloads") or 0),
                 "tags": data.get("tags") or [],
@@ -77,6 +79,6 @@ def get_agent(agent_id: str):
     agent = get_agent_by_id(agent_id)
     if not agent:
         raise HTTPException(status_code=404, detail=f"Agent '{agent_id}' not found")
-    live_rating, _count = get_rating_stats(agent_id)
-    return AgentDetail(**{**agent, "rating": live_rating})
+    live_rating, live_count = get_rating_stats(agent_id)
+    return AgentDetail(**{**agent, "rating": live_rating, "review_count": live_count})
 
