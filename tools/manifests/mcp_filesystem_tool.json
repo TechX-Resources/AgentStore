@@ -1,0 +1,23 @@
+{
+  "id": "mcp_filesystem",
+  "name": "MCP Filesystem",
+  "description": "Reads real files from a local directory through a real Model Context Protocol (MCP) server (@modelcontextprotocol/server-filesystem, stdio transport). No mock data.",
+  "category": "Files",
+  "version": "1.0.0",
+  "permission_level": "read",
+  "permissions_required": ["files.read"],
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "path": { "type": "string", "description": "Absolute path to the file to read" }
+    },
+    "required": ["path"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "text": { "type": "string", "description": "Raw file contents" }
+    }
+  },
+  "implementation_notes": "Real MCP server, launched via 'npx -y @modelcontextprotocol/server-filesystem <MCP_FILESYSTEM_ROOT>'. Restricted to the directory set by MCP_FILESYSTEM_ROOT. Calls the server's read_text_file (or read_file) tool. See agents/runner/agent_runner.py."
+}

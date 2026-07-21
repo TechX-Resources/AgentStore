@@ -11,8 +11,8 @@
   "installs": 850,
   "runs": 3800,
   "tags": ["finance", "budget", "analysis", "savings"],
-  "tools_required": ["spreadsheet"],
-  "permissions_required": ["spreadsheet.read"],
+  "tools_required": ["mcp_filesystem"],
+  "permissions_required": ["files.read"],
   "inputs": {
     "type": "object",
     "properties": {
