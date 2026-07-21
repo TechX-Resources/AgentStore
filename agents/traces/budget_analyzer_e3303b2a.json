@@ -1,0 +1,66 @@
+{
+  "run_id": "e3303b2a",
+  "agent_id": "budget_analyzer",
+  "user_input": {},
+  "final_output": {
+    "total_spending": 4335.0,
+    "category_breakdown": {
+      "Food": 1760.0,
+      "Transport": 325.0,
+      "Entertainment": 295.0,
+      "Utilities": 255.0,
+      "Housing": 1500.0,
+      "Shopping": 200.0
+    },
+    "savings_opportunities": [],
+    "trend_summary": "PENDING_LLM_INTEGRATION"
+  },
+  "status": "success",
+  "message": "Live run via real MCP filesystem server. LLM reasoning step is pending.",
+  "trace": {
+    "agent_id": "budget_analyzer",
+    "run_id": "e3303b2a",
+    "status": "completed",
+    "user_request": "Analyze my budget spreadsheet and suggest savings.",
+    "steps": [
+      {
+        "step": 1,
+        "action": "tool_call",
+        "tool_id": "mcp_filesystem",
+        "details": {
+          "root": "C:\\Users\\admin\\AgentStore\\datasets",
+          "filename": "mock_spreadsheet.csv"
+        },
+        "output_summary": {
+          "status": "success",
+          "rows_scanned": 14,
+          "chars_read": 618
+        },
+        "status": "success",
+        "latency_ms": 2501
+      },
+      {
+        "step": 2,
+        "action": "reasoning",
+        "tool_id": null,
+        "details": "LLM reasoning step not yet implemented.",
+        "output_summary": "Pending LLM integration \u2014 savings_opportunities and trend_summary are placeholders until this is wired up.",
+        "status": "pending"
+      }
+    ],
+    "final_output": {
+      "total_spending": 4335.0,
+      "category_breakdown": {
+        "Food": 1760.0,
+        "Transport": 325.0,
+        "Entertainment": 295.0,
+        "Utilities": 255.0,
+        "Housing": 1500.0,
+        "Shopping": 200.0
+      },
+      "savings_opportunities": [],
+      "trend_summary": "PENDING_LLM_INTEGRATION"
+    }
+  },
+  "duration_ms": 2501
+}

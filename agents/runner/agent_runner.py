@@ -8,6 +8,8 @@ is returned so the UI Run flow works across the full catalog.
 
 from __future__ import annotations
 
+import asyncio
+import os
 import json
 import time
 import uuid
@@ -86,6 +88,118 @@ def email_chain(user_input: dict, prev: dict) -> list[tuple[str, dict]]:
 AGENT_CHAINS = {
     "email_summarizer": email_chain,
 }
+
+import csv
+import io
+
+
+async def _mcp_read_text_file(root: str, filename: str) -> str:
+    """Read a file's contents through a real MCP filesystem server (stdio)."""
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
+
+    server_params = StdioServerParameters(
+        command="npx",
+        args=["-y", "@modelcontextprotocol/server-filesystem", root],
+    )
+    target_path = str(Path(root) / filename)
+
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            try:
+                result = await session.call_tool("read_text_file", {"path": target_path})
+            except Exception:
+                result = await session.call_tool("read_file", {"path": target_path})
+            return "".join(getattr(block, "text", "") for block in result.content)
+
+
+def _parse_budget_csv(csv_text: str) -> dict:
+    """Real (non-LLM) computation over the real CSV: totals + category breakdown."""
+    reader = csv.DictReader(io.StringIO(csv_text))
+    rows = list(reader)
+    category_breakdown: dict[str, float] = {}
+    total = 0.0
+    for row in rows:
+        amount = float(row.get("amount") or row.get("Amount") or 0)
+        category = row.get("category") or row.get("Category") or "Uncategorized"
+        category_breakdown[category] = round(category_breakdown.get(category, 0) + amount, 2)
+        total += amount
+    return {
+        "rows_scanned": len(rows),
+        "total_spending": round(total, 2),
+        "category_breakdown": category_breakdown,
+    }
+
+
+REPO_ROOT = Path(__file__).parent.parent.parent
+DEFAULT_MCP_FILESYSTEM_ROOT = REPO_ROOT / "datasets"
+
+
+def _run_budget_analyzer_live(user_input: dict) -> dict:
+    """Real run: MCP filesystem read + real CSV computation. LLM step pending."""
+    root = os.environ.get("MCP_FILESYSTEM_ROOT") or str(DEFAULT_MCP_FILESYSTEM_ROOT)
+    filename = os.environ.get("BUDGET_CSV_FILENAME", "mock_spreadsheet.csv")
+    query = user_input.get("query") or "Analyze my budget spreadsheet and suggest savings."
+
+    run_id = str(uuid.uuid4())[:8]
+    start = time.time()
+
+    csv_text = asyncio.run(_mcp_read_text_file(root, filename))
+    t_read = time.time()
+    computed = _parse_budget_csv(csv_text)
+
+    final_output = {
+        "total_spending": computed["total_spending"],
+        "category_breakdown": computed["category_breakdown"],
+        "savings_opportunities": [],
+        "trend_summary": "PENDING_LLM_INTEGRATION",
+    }
+
+    steps = [
+        {
+            "step": 1,
+            "action": "tool_call",
+            "tool_id": "mcp_filesystem",
+            "details": {"root": root, "filename": filename},
+            "output_summary": {
+                "status": "success",
+                "rows_scanned": computed["rows_scanned"],
+                "chars_read": len(csv_text),
+            },
+            "status": "success",
+            "latency_ms": int((t_read - start) * 1000),
+        },
+        {
+            "step": 2,
+            "action": "reasoning",
+            "tool_id": None,
+            "details": "LLM reasoning step not yet implemented.",
+            "output_summary": "Pending LLM integration, savings_opportunities and "
+            "trend_summary are placeholders until this is wired up.",
+            "status": "pending",
+        },
+    ]
+
+    result = {
+        "run_id": run_id,
+        "agent_id": "budget_analyzer",
+        "user_input": user_input,
+        "final_output": final_output,
+        "status": "success",
+        "message": "Live run via real MCP filesystem server. LLM reasoning step is pending.",
+        "trace": {
+            "agent_id": "budget_analyzer",
+            "run_id": run_id,
+            "status": "completed",
+            "user_request": query,
+            "steps": steps,
+            "final_output": final_output,
+        },
+        "duration_ms": int((time.time() - start) * 1000),
+    }
+    _save_trace(result)
+    return result
 
 
 def build_final_output(agent_id: str, outputs: dict) -> dict | str:
@@ -214,6 +328,18 @@ def _synthesize_minimal_run(agent_id: str, user_input: dict) -> dict:
 
 def run_agent(agent_id: str, user_input: dict) -> dict:
     """Simulate running an agent with mock tools or a static trace fallback."""
+    if agent_id == "budget_analyzer":
+        if True:  # live path now has a repo-relative default, no config required
+            try:
+                return _run_budget_analyzer_live(user_input or {})
+            except Exception as exc:
+                fallback = _simulate_from_static_trace(
+                    agent_id, user_input or {}
+                ) or _synthesize_minimal_run(agent_id, user_input or {})
+                fallback["status"] = "error"
+                fallback["message"] = f"Live run failed ({exc}); showing mock trace instead."
+                return fallback
+
     if agent_id in AGENT_CHAINS:
         return _run_tool_chain(agent_id, user_input or {})
 
